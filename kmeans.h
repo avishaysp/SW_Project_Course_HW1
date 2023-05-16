@@ -1,4 +1,6 @@
 #include <stdio.h>
+#pragma once
+#define max(a,b) (((a) > (b)) ? (a) : (b))
 
 typedef struct Centroid
 {
