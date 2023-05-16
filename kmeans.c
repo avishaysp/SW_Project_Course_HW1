@@ -45,7 +45,6 @@ double maxDelta(double *deltas, int numberOfVectors) {
 double update(Centroid* centroid, int vectorsLength) {
     int i;
     double delta;
-    double** vectors_list = deepCopy2DArray(centroid->relatedVectors, centroid->numOfVectors, vectorsLength);
     double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
