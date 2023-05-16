@@ -170,9 +170,9 @@ void zeroArray(double* array, int arrayLength) {
 }
 
 int countDigitsOfWholePart(double value) {
+    int count = 1;
     if (value < 0)
         value = -value;
-    int count = 1;
     while (value >= 10) {
         value /= 10;
         count++;
