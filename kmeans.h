@@ -14,5 +14,5 @@ Centroid* calcClosestCentroid(int* vector, Centroid** centroids);
 double euclidianDistance(int *vector1, int *vector2, int vectorsLength);
 int* copyArray(int* inputArray, int rows);
 void zeroArray(double* array, int arrayLength);
-double avargeOf(Centroid* centroid, int i);
+double averageOf(Centroid* centroid, int i);
 void freeRelatedVectors(Centroid* centroid);

@@ -1,11 +1,10 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 #include "kmeans.h"
 
 
 
-int** kmeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, int **vectorsList) {
+int** kmeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, int** vectorsList) {
     int i;
     int currentIteration = 0;
     double maxMiuK = 0.0;
@@ -38,12 +37,12 @@ double update(Centroid* centroid, int vectorsLength) {
     int** vectors_list = deepCopy2DArray(centroid->relatedVectors, centroid->numOfVectors, vectorsLength);
     int* updatingCentroidVector = copyArray(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
-        centroid->selfVector[i] = avargeOf(centroid, i);
+        centroid->selfVector[i] = averageOf(centroid, i);
     }
     freeRelatedVectors(centroid);
 }
 
-double avargeOf(Centroid* centroid, int i) {
+double averageOf(Centroid* centroid, int i) {
     double sum = 0.0;
     int j;
     for (j = 0; j < centroid->numOfVectors; j++) {
@@ -57,10 +56,22 @@ void freeRelatedVectors(Centroid* centroid) {
     for (i = 0; i < centroid->numOfVectors; i++) {
         free(centroid->relatedVectors[i]);
     }
+    centroid->numOfVectors = 0;
 }
 
-Centroid* calcClosestCentroid(int* vector, Centroid** centroids) {
-
+Centroid* calcClosestCentroid(int* vector, Centroid** centroids, int K, int vectorsLength) {
+    int i;
+    Centroid* closestCentroid = centroids[0];
+    double distToClosest = euclidianDistance(vector, centroids[0]->selfVector, vectorsLength);
+    double currentDist;
+    for (i = 1; i < K; i++) {
+        currentDist = euclidianDistance(vector, centroids[i]->selfVector, vectorsLength);
+        if (currentDist < distToClosest) {
+            closestCentroid = centroids[i];
+            distToClosest = currentDist;
+        }
+    }
+    return closestCentroid;
 }
 
 double euclidianDistance(int *vector1, int *vector2, int vectorsLength) {
