@@ -31,7 +31,7 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
         maxMiuK = maxDelta(deltas, numberOfVectors);
         currentIteration++;
     } while (currentIteration < iter && maxMiuK >= eps);
-    return getCentroidsSelfVectors(centroids, K, vectorsLength);
+    return getCentroidsSelfVectors(centroids, K);
 }
 
 double maxDelta(double *deltas, int numberOfVectors) {
