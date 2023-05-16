@@ -55,7 +55,7 @@ double update(Centroid* centroid, int vectorsLength) {
     return delta;
 }
 
-double** getCentroidsSelfVectors(Centroid* centroids, int K, int vectorsLength) {
+double** getCentroidsSelfVectors(Centroid* centroids, int K) {
     int i;
     double** selfVectors = (double**) malloc(K * sizeof(double*));
     for (i = 0; i < K; i ++) {
