@@ -11,7 +11,7 @@ typedef struct Centroid
 double** deepCopy2DArray(double** inputArray, int rows, int columns);
 double* copyArray(double* inputArray, int rows);
 double update(Centroid* centroid, int vectorsLength);
-Centroid* calcClosestCentroid(double* vector, Centroid** centroids);
+Centroid* calcClosestCentroid(double *vector, Centroid **centroids, int K, int vectorsLength);
 double euclidianDistance(double *vector1, double *vector2, int vectorsLength);
 double* copyArray(double* inputArray, int rows);
 void zeroArray(double* array, int arrayLength);
