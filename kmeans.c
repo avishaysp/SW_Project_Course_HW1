@@ -2,12 +2,14 @@
 #include <math.h>
 #include "kmeans.h"
 
+int main() {
 
+}
 
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
     int i;
     int currentIteration = 0;
-    double maxMiuK = 0.0;
+    double maxMiuK;
     Centroid* closestCentroid;
     double** vectorsListCopy = deepCopy2DArray(vectorsList, numberOfVectors, vectorsLength);
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
@@ -28,18 +30,41 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
         for (i = 0; i < K; i++) {
             deltas[i] = update(&centroids[i], vectorsLength);
         }
+        maxMiuK = maxDelta(deltas, numberOfVectors);
         currentIteration++;
     } while (currentIteration < iter && maxMiuK >= eps);
+    return getCentroidsSelfVectors(centroids, K, vectorsLength);
+}
+
+double maxDelta(double *deltas, int numberOfVectors) {
+    int i;
+    double maxVal = 0.0;
+    for (i = 0; i < numberOfVectors; i++)
+        maxVal = max(maxVal, deltas[i]);
+    return maxVal;
 }
 
 double update(Centroid* centroid, int vectorsLength) {
     int i;
+    double delta;
     double** vectors_list = deepCopy2DArray(centroid->relatedVectors, centroid->numOfVectors, vectorsLength);
-    double* updatingCentroidVector = copyArray(centroid->selfVector, vectorsLength);
+    double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
     }
+    delta = euclidianDistance(oldCentroidVector, centroid->selfVector);
     freeRelatedVectors(centroid);
+    free(oldCentroidVector);
+    return delta;
+}
+
+double** getCentroidsSelfVectors(Centroid* centroids, int K, int vectorsLength) {
+    int i;
+    double** selfVectors = (double**) malloc(K * sizeof(double*));
+    for (i = 0; i < K; i ++) {
+        selfVectors[i] = centroids[i].selfVector;
+    }
+    return selfVectors;
 }
 
 double averageOf(Centroid* centroid, int i) {
@@ -58,6 +83,7 @@ void freeRelatedVectors(Centroid* centroid) {
     }
     centroid->numOfVectors = 0;
 }
+
 
 Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int vectorsLength) {
     int i;

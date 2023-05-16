@@ -16,3 +16,5 @@ double* copyArray(double* inputArray, int rows);
 void zeroArray(double* array, int arrayLength);
 double averageOf(Centroid* centroid, int i);
 void freeRelatedVectors(Centroid* centroid);
+double maxDelta(double *deltas, int numberOfVectors);
+double** getCentroidsSelfVectors(Centroid* centroids, int K, int vectorsLength);
