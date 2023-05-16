@@ -99,9 +99,9 @@ Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int v
 
 
 char* roundedDouble(double* pDouble) {
-    int bufferSize = snprintf(NULL, 0, "%.4f", *pDouble);
+    int bufferSize = sprintf(NULL, "%.4f", *pDouble);
     char* rounded = (char*)malloc((bufferSize + 1) * sizeof(char));
-    snprintf(rounded, bufferSize + 1, "%.4f", *pDouble);
+    sprintf(rounded, "%.4f", *pDouble);
     return rounded;
 }
 
