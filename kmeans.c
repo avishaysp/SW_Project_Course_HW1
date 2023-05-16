@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
 #include "kmeans.h"
 
 int main() {
