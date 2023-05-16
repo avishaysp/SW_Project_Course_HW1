@@ -4,17 +4,17 @@
 
 
 
-int** kmeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, int** vectorsList) {
+double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
     int i;
     int currentIteration = 0;
     double maxMiuK = 0.0;
     Centroid* closestCentroid;
-    int** vectorsListCopy = deepCopy2DArray(vectorsList, numberOfVectors, vectorsLength);
+    double** vectorsListCopy = deepCopy2DArray(vectorsList, numberOfVectors, vectorsLength);
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
     for (i = 0; i < K; i++) {
         centroids[i].selfVector = copyArray(vectorsListCopy[i], vectorsLength);
-        centroids[i].relatedVectors = (int**)malloc(numberOfVectors * sizeof(int*));
+        centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
     }
     do
     {
@@ -34,8 +34,8 @@ int** kmeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps
 
 double update(Centroid* centroid, int vectorsLength) {
     int i;
-    int** vectors_list = deepCopy2DArray(centroid->relatedVectors, centroid->numOfVectors, vectorsLength);
-    int* updatingCentroidVector = copyArray(centroid->selfVector, vectorsLength);
+    double** vectors_list = deepCopy2DArray(centroid->relatedVectors, centroid->numOfVectors, vectorsLength);
+    double* updatingCentroidVector = copyArray(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
     }
@@ -59,7 +59,7 @@ void freeRelatedVectors(Centroid* centroid) {
     centroid->numOfVectors = 0;
 }
 
-Centroid* calcClosestCentroid(int* vector, Centroid** centroids, int K, int vectorsLength) {
+Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int vectorsLength) {
     int i;
     Centroid* closestCentroid = centroids[0];
     double distToClosest = euclidianDistance(vector, centroids[0]->selfVector, vectorsLength);
@@ -74,7 +74,33 @@ Centroid* calcClosestCentroid(int* vector, Centroid** centroids, int K, int vect
     return closestCentroid;
 }
 
-double euclidianDistance(int *vector1, int *vector2, int vectorsLength) {
+
+char* roundedDouble(double* pDouble) {
+    int bufferSize = snprintf(NULL, 0, "%.4f", *pDouble);
+    char* rounded = (char*)malloc((bufferSize + 1) * sizeof(char));
+    snprintf(rounded, bufferSize + 1, "%.4f", *pDouble);
+    return rounded;
+}
+
+char** roundedVector(double* vector, int vectorsLength) {
+    int i;
+    char** rounded = (char**)malloc(vectorsLength * sizeof(char*));
+    for (i = 0; i < vectorsLength; i++) {
+        rounded[i] = roundedDouble(vector[i]);
+    }
+    return rounded;
+}
+
+char*** roundedVectors(double** vectors, int vectorsLength, int numberOfVectors) {
+    int i;
+    char*** rounded = (char***) malloc(numberOfVectors * sizeof(char**));
+    for (i = 0;  < numberOfVectors; i++) {
+        rounded[i] = roundedVector(vectors[i], vectorsLength);
+    }
+    return rounded;
+}
+
+double euclidianDistance(double *vector1, double *vector2, int vectorsLength) {
     double sum = 0.0;
     int i;
     for (i = 0; i < vectorsLength; i++) {
@@ -83,9 +109,9 @@ double euclidianDistance(int *vector1, int *vector2, int vectorsLength) {
     return sqrt(sum);
 }
 
-int* copyArray(int* inputArray, int rows) {
+double* copyArray(double* inputArray, int rows) {
     int i;
-    int* arrayCopy = (int*)malloc(rows * sizeof(int));
+    double* arrayCopy = (double*)malloc(rows * sizeof(double));
     if (arrayCopy == NULL) 
         return NULL;
     for (i = 0; i < rows; i++)
@@ -93,14 +119,14 @@ int* copyArray(int* inputArray, int rows) {
     return arrayCopy;
 }
 
-int** deepCopy2DArray(int** inputArray, int rows, int columns) {
+double** deepCopy2DArray(double** inputArray, int rows, int columns) {
     int i, j;
     /*Allocate memory*/
-    int** arrayCopy = (int**)malloc(rows * sizeof(int*));
+    double** arrayCopy = (double**)malloc(rows * sizeof(double*));
     if (arrayCopy == NULL)
         return NULL;
     for (i = 0; i < rows; i++) {
-        arrayCopy[i] = (int*)malloc(columns * sizeof(int));
+        arrayCopy[i] = (double*)malloc(columns * sizeof(double));
         if (arrayCopy[i] == NULL) {
             /*Error Handling*/
             for (j = 0; j < i; j++)

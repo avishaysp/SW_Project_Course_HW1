@@ -2,17 +2,17 @@
 
 typedef struct Centroid
 {
-    int* selfVector;
+    double* selfVector;
     int numOfVectors;
-    int** relatedVectors; 
+    double** relatedVectors;
 }Centroid;
 
-int** deepCopy2DArray(int** inputArray, int rows, int columns);
-int* copyArray(int* inputArray, int rows);
+double** deepCopy2DArray(double** inputArray, int rows, int columns);
+double* copyArray(double* inputArray, int rows);
 double update(Centroid* centroid, int vectorsLength);
-Centroid* calcClosestCentroid(int* vector, Centroid** centroids);
-double euclidianDistance(int *vector1, int *vector2, int vectorsLength);
-int* copyArray(int* inputArray, int rows);
+Centroid* calcClosestCentroid(double* vector, Centroid** centroids);
+double euclidianDistance(double *vector1, double *vector2, int vectorsLength);
+double* copyArray(double* inputArray, int rows);
 void zeroArray(double* array, int arrayLength);
 double averageOf(Centroid* centroid, int i);
 void freeRelatedVectors(Centroid* centroid);
