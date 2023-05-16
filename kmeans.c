@@ -97,10 +97,9 @@ Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int v
     return closestCentroid;
 }
 
-
 char* roundedDouble(double* pDouble) {
-    int bufferSize = sprintf(NULL, "%.4f", *pDouble);
-    char* rounded = (char*)malloc((bufferSize + 1) * sizeof(char));
+    int numOfDigsInWholePart = countDigitsOfWholePart(*pDouble);
+    char* rounded = (char*)malloc((1 + numOfDigsInWholePart + 1 + 4 + 1) * sizeof(char)); /* minus, radix, precision, null terminator */
     sprintf(rounded, "%.4f", *pDouble);
     return rounded;
 }
@@ -168,4 +167,15 @@ void zeroArray(double* array, int arrayLength) {
     int i;
     for (i = 0; i < arrayLength; i++)
         array[i] = 0.0;
+}
+
+int countDigitsOfWholePart(double value) {
+    if (value < 0)
+        value = -value;
+    int count = 1;
+    while (value >= 10) {
+        value /= 10;
+        count++;
+    }
+    return count;
 }
