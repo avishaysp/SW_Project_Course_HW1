@@ -1,7 +1,7 @@
 #include "kmeans.h"
 
 int main() {
-
+    return 0;
 }
 
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
@@ -19,7 +19,7 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     do
     {
         for (i = 0; i < numberOfVectors; i ++) {
-            closestCentroid = calcClosestCentroid(vectorsList[i], &centroids);
+            closestCentroid = calcClosestCentroid(vectorsList[i], &centroids, K, vectorsLength);
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
             closestCentroid->numOfVectors++;
         }
@@ -50,7 +50,7 @@ double update(Centroid* centroid, int vectorsLength) {
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
     }
-    delta = euclidianDistance(oldCentroidVector, centroid->selfVector);
+    delta = euclidianDistance(oldCentroidVector, centroid->selfVector, vectorsLength);
     freeRelatedVectors(centroid);
     free(oldCentroidVector);
     return delta;
@@ -110,7 +110,7 @@ char** roundedVector(double* vector, int vectorsLength) {
     int i;
     char** rounded = (char**)malloc(vectorsLength * sizeof(char*));
     for (i = 0; i < vectorsLength; i++) {
-        rounded[i] = roundedDouble(vector[i]);
+        rounded[i] = roundedDouble(&(vector[i]));
     }
     return rounded;
 }
@@ -118,7 +118,7 @@ char** roundedVector(double* vector, int vectorsLength) {
 char*** roundedVectors(double** vectors, int vectorsLength, int numberOfVectors) {
     int i;
     char*** rounded = (char***) malloc(numberOfVectors * sizeof(char**));
-    for (i = 0;  < numberOfVectors; i++) {
+    for (i = 0; i < numberOfVectors; i++) {
         rounded[i] = roundedVector(vectors[i], vectorsLength);
     }
     return rounded;
