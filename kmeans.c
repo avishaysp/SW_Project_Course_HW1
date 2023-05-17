@@ -8,12 +8,12 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     int i;
     int currentIteration = 0;
     double maxMiuK;
-    Centroid* closestCentroid;
-    double** vectorsListCopy = deepCopy2DArray(vectorsList, numberOfVectors, vectorsLength);
+    Centroid *closestCentroid;
+    double **result;
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
     for (i = 0; i < K; i++) {
-        centroids[i].selfVector = copyArray(vectorsListCopy[i], vectorsLength);
+        centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
         centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
     }
     do
@@ -31,7 +31,12 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
         maxMiuK = maxDelta(deltas, numberOfVectors);
         currentIteration++;
     } while (currentIteration < iter && maxMiuK >= eps);
-    return getCentroidsSelfVectors(centroids, K);
+    result = getCentroidsSelfVectors(centroids, K);
+    for (i = 0; i < K; i++) {
+        freeRelatedVectors(&(centroids[i]));
+    }
+    free(centroids);
+    return result;
 }
 
 double maxDelta(double *deltas, int numberOfVectors) {
