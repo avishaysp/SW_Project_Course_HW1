@@ -276,8 +276,11 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     do
     {
         for (i = 0; i < numberOfVectors; i++) {
+            printf("%d\n", 34);
             closestCentroid = calcClosestCentroid(vectorsList[i], &centroids, K, vectorsLength);
+            printf("%d\n", 35);
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
+            printf("%d\n", 34);
             closestCentroid->numOfVectors++;
         }
 
