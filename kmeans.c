@@ -245,8 +245,9 @@ int main(int argc, char **argv)
     cols++;
     rows++;
     j++;
+    i++;
     next_cord++;
-    nextvec++;
+    next_vec++;
     argc++;
     argv++;
     return 0;
