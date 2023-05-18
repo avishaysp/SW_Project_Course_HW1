@@ -252,7 +252,7 @@ struct input_list getInput(void)
         }
 
         if (numOfVectors == 0) {
-            vectorsLength++
+            vectorsLength++;
         }
         curr_cord->value = n;
         curr_cord->next = malloc(sizeof(struct cord));
