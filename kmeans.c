@@ -114,8 +114,11 @@ void deleteList(struct vector* vec){
     if (vec != NULL) {
         printf("%d\n", 10);
         deleteList(vec->next);
+        printf("%d\n", 11);
         deleteCords(&(vec->cords[0]));
+        printf("%d\n", 12);
         free(vec);
+        printf("%d\n", 13);
     }
 }
 
