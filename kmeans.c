@@ -40,7 +40,7 @@ int getVectorSize(char*);
 int countElements(LINK);
 LINK createList(void);
 void printMat(double**);
-
+struct input_list getInput(void)
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
@@ -212,6 +212,8 @@ void printMat(double** mat){
 }
 
 int main(void){
+    struct input_list input = getInput();
+    printf((int)input.numOfVectors);
     return 0;
 }
 
