@@ -44,6 +44,7 @@ void freeRelatedVectors(Centroid* centroid);
 double maxDelta(double *deltas, int numberOfVectors);
 double** getCentroidsSelfVectors(Centroid* centroids, int K);
 int countDigitsOfWholePart(double value);
+double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
 
 int getVectorSize(char* str){
     int i;
