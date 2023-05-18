@@ -207,6 +207,7 @@ int main(int argc, char** argv)
     printf("%d\n", 21);
     free(inputConsts);
     printf("%d\n", 22);
+    printMat(input.mat, vectorsLength, numOfVectors);
     kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
     printf("%f", kMeansResult[0][0]);
     return 0;
