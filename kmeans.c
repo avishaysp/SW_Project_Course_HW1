@@ -80,7 +80,7 @@ struct inputMat createMatrix(void){
         mat[i] = (double*) malloc(vectorsLength * sizeof(double));
         printf("%d\n", 3);
         c = vec.cords[0];
-        for(j = 0; j < vectorsLength; j++, c = *c.next){
+        for(j = 0; j < vectorsLength; j++){
             printf("%d\n", 4);
             mat[i][j] = c.value;
             printf("%d\n", 5);
