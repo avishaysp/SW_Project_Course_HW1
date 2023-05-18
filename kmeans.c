@@ -64,7 +64,7 @@ LINK createList(void){
     char* buffer = NULL;
     size_t buffer_size = 0;
     printf("create list\n");
-    printf("%d", getline(&buffer, &buffer_size, stdin));
+    printf("%d", (int)getline(&buffer, &buffer_size, stdin));
     printf("1");
     if (getline(&buffer, &buffer_size, stdin) != -1){
         printf("0");
