@@ -44,9 +44,8 @@ void deleteList(struct vector* vec);
 int isStrNumber(char*);
 struct inputMat createMatrix(void);
 int* verifyInput(int, char**);
-void printMat(double**);
+void printMat(double** mat, int vectorsLength, int numOfVectors);
 struct input_list getInput(void);
-
 double** deepCopy2DArray(double** inputArray, int rows, int columns);
 double* copyArray(double* inputArray, int rows);
 double update(Centroid* centroid, int vectorsLength);
