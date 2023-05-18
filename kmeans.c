@@ -1,7 +1,176 @@
+#include <string.h>
 #include "kmeans.h"
 
-int main() {
-    printf('a');
+#define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
+
+typedef struct linked_list {
+    char* data;
+    struct linked_list* next;
+}linked_list;
+
+typedef linked_list ELEMENT;
+typedef ELEMENT* LINK;
+
+int isStrNumber(char*);
+double** createMatrix(void);
+int* verifyInput(int, char**);
+int getVectorSize(char*);
+int countElements(LINK);
+LINK createList(void);
+void printMat(double**);
+
+int getVectorSize(char* str){
+    int i;
+    int size = 1;
+    int len = (int) strlen(str);
+    for(i=0; i < len; i++){
+        if (str[i] == ','){
+            size++;
+        }
+    }
+    return size;
+}
+
+LINK createList(void){
+    LINK head = NULL, tail = NULL;
+    size_t len;
+    char* buffer = NULL;
+    size_t buffer_size = 0;
+    if (getline(&buffer, &buffer_size, stdin) != -1){
+        len = strlen(buffer);
+        if (len > 0 && buffer[len - 1] == '\n') {
+            buffer[len - 1] = '\0';
+        }
+        head = (ELEMENT*)malloc(sizeof(ELEMENT));
+        head->data = buffer;
+        tail = head;
+        while (getline(&buffer, &buffer_size, stdin) != -1) {
+            len = strlen(buffer);
+            if (len > 0 && buffer[len - 1] == '\n') {
+                buffer[len - 1] = '\0';
+            }
+            tail->next = (ELEMENT*)malloc(sizeof(ELEMENT));
+            tail = tail -> next;
+            tail -> data = buffer;
+        }
+        tail -> next = NULL;
+    }
+    return head;
+}
+
+int countElements(LINK head){
+    int cnt = 0;
+    for (;head !=NULL; head = head->next){
+        ++cnt;
+    }
+    return cnt;
+}
+
+double** createMatrix(void){
+    double num;
+    int i, j;
+    char *word, *token;
+    LINK head = createList();
+    int numOfVectors = countElements(head);
+    int vectorSize = getVectorSize(head->data);
+    double** mat = (double**) malloc(numOfVectors * sizeof(double*));
+    for(i = 0; i < numOfVectors; i++){
+        mat[i] = (double*) malloc(vectorSize * sizeof(double));
+        j = 0;
+        word = head -> data;
+        token = strtok(word, ",");
+        while (token != NULL) {
+            num = strtod(token, NULL);
+            mat[i][j] = num;
+            j++;
+            token = strtok(NULL, "'");
+        }
+        free(head);
+        head = head -> next;
+    }
+    return mat;
+}
+
+int isStrNumber(char* str){
+    int i;
+    int length = strlen(str);
+    if (str[0] == '0'){
+        return 0;
+    }
+    for (i=1;i<length; i++){
+        if (str[i] < '0' || str[i] > '9'){
+            return 0;
+        }
+    }
+
+    return 1;
+
+}
+
+int* verifyInput(int a, char **b){
+    int* arr = calloc(2, sizeof(int));
+    int k, iter;
+    char* k1, *iter1;
+    if (a < 2 || a > 3){
+        printf("An Error Has Occurred");
+        exit(1);
+    }
+    k1 = b[1];
+    if(!isStrNumber(k1)){
+        printf("invalid number of clusters!");
+        exit(1);
+    } else {
+        k = atoi(k1);
+        if(k <= 1 /*|| argv[1] >= mat.GetLength(0)*/){
+            printf("invalid number of clusters!");
+            exit(1);
+        }
+    }
+    if (a == 3){
+        iter1 = b[2];
+        if(!isStrNumber(iter1)){
+            printf("Invalid maximum iteration!");
+            exit(1);
+        } else {
+            iter = atoi(iter1);
+            if(iter <= 1 || iter >= 1000){
+                printf("Invalid maximum iteration!");
+                exit(1);
+            }
+        }
+    } else {
+        iter = 200;
+    }
+    arr[0] = k;
+    arr[1] = iter;
+    return arr;
+}
+
+void printMat(double** mat){
+    for(int i=0; i<3; i++) {
+        for(int j=0; j<2; j++) {
+            printf("%f ", mat[i][j]);
+        }
+        printf("\n"); // new line
+    }
+}
+
+int main(int argc, char **argv){
+    double** mat;
+    int* input;
+    int k, iter;
+    int numberOfVector;
+    int vectorLength;
+
+
+    mat = createMatrix();
+    input = verifyInput(argc, argv);
+    k = input[0];
+    iter = input[1];
+    free(input);
+    // numberOfVector = LEN(mat);
+    // vectorLength = (mat[0]);
+    printMat(mat);
     return 0;
 }
 
