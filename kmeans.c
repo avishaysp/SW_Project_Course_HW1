@@ -3,7 +3,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-#include "kmeans.h"
 
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
 
