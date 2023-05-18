@@ -180,13 +180,14 @@ int* verifyInput(int a, char **b){
     return arr;
 }
 
-void printMat(double** mat){
+void printMat(double** mat, int vectorsLength, int numOfVectors){
     int i;
     int j;
-    for(i=0; i<3; i++) {
-        for(j=0; j<2; j++) {
-            printf("%f ", mat[i][j]);
+    for(i=0; i<numOfVectors; i++) {
+        for(j=0; j<vectorsLength; j++) {
+            printf("%f,", mat[i][j]);
         }
+        printf("\n");
         printf("\n");
     }
 }
