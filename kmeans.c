@@ -90,6 +90,7 @@ struct inputMat createMatrix(void){
         }
         printf("%d\n", 6);
         vec = *(vec.next);
+        printf("%d\n", 7);
     }
     deleteList(&head);
     structinputMat.mat = mat;
