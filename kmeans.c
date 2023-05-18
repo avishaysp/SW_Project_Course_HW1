@@ -22,6 +22,14 @@ struct vector
     struct cord *cords;
 };
 
+struct input_list
+{
+    struct vector *vectors;
+    int vectorLength;
+    int numOfVectors;
+
+};
+
 typedef linked_list ELEMENT;
 typedef ELEMENT* LINK;
 
@@ -203,13 +211,20 @@ void printMat(double** mat){
     }
 }
 
-int main(void)
-{
+int main(void){
+    return 0;
+}
 
+struct input_list getInput(void)
+{
+    struct input_list input;
     struct vector *head_vec, *curr_vec;
     struct cord *head_cord, *curr_cord;
     double n;
     char c;
+    int numOfVectors = 0, vectorsLength = 0;
+    double** resultMat;
+    double resultVec;
 
     head_cord = malloc(sizeof(struct cord));
     curr_cord = head_cord;
@@ -225,6 +240,7 @@ int main(void)
 
         if (c == '\n')
         {
+            numOfVectors++;
             curr_cord->value = n;
             curr_vec->cords = head_cord;
             curr_vec->next = malloc(sizeof(struct vector));
@@ -236,12 +252,20 @@ int main(void)
             continue;
         }
 
+        if (numOfVectors == 0) {
+            vectorsLength++
+        }
         curr_cord->value = n;
         curr_cord->next = malloc(sizeof(struct cord));
         curr_cord = curr_cord->next;
         curr_cord->next = NULL;
     }
-    return 0;
+
+    input.numOfVectors = numOfVectors;
+    input.vectorLength = vectorsLength;
+    input.vectors = head_vec;
+
+    return input;
 }
 
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
