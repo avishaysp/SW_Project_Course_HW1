@@ -197,8 +197,8 @@ int main(int argc, char **argv){
     k = input[0];
     iter = input[1];
     free(input);
-    // numberOfVector = LEN(mat);
-    // vectorLength = (mat[0]);
+    /* numberOfVector = LEN(mat);
+     vectorLength = (mat[0]); */
     printMat(mat);
     return 0;
 }
