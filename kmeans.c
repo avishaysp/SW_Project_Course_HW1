@@ -179,8 +179,9 @@ int main(int argc, char** argv)
     struct inputMat input;
     int K, iter, vectorsLength, numOfVectors;
     double** kMeansResult;
+    int* inputConsts;
     input = createMatrix();
-    int* inputConsts = verifyInput(argc, argv);
+    inputConsts = verifyInput(argc, argv);
     K = inputConsts[0];
     iter = inputConsts[1];
     numOfVectors = input.numOfVectors;
