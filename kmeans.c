@@ -1,4 +1,7 @@
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
 #include "kmeans.h"
 
 #define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
@@ -174,7 +177,8 @@ int* verifyInput(int a, char **b){
 }
 
 void printMat(double** mat){
-    for(int i=0; i<3; i++) {
+    int il
+    for(i=0; i<3; i++) {
         for(int j=0; j<2; j++) {
             printf("%f ", mat[i][j]);
         }
