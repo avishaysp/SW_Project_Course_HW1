@@ -84,7 +84,7 @@ struct inputMat createMatrix(void){
         }
         vec = *(vec.next);
     }
-    deleteList(&(head.next));
+    deleteList(head.next);
     printf("%d\n", 9);
     structinputMat.mat = mat;
     structinputMat.vectorsLength = vectorsLength;
