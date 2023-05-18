@@ -63,12 +63,16 @@ LINK createList(void){
     size_t len;
     char* buffer = NULL;
     size_t buffer_size = 0;
+    printf("create list\n");
     if (getline(&buffer, &buffer_size, stdin) != -1){
+        printf("0");
         len = strlen(buffer);
         if (len > 0 && buffer[len - 1] == '\n') {
             buffer[len - 1] = '\0';
         }
+        printf("1");
         head = (ELEMENT*)malloc(sizeof(ELEMENT));
+        printf("2");
         head->data = buffer;
         tail = head;
         while (getline(&buffer, &buffer_size, stdin) != -1) {
@@ -97,6 +101,7 @@ double** createMatrix(void){
     double num;
     int i, j;
     char *word, *token;
+    LINK head = NULL;
     LINK head = createList();
     int numOfVectors = countElements(head);
     int vectorSize = getVectorSize(head->data);
