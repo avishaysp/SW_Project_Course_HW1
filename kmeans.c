@@ -42,7 +42,7 @@ struct inputMat
 
 void deleteList(struct vector* vec);
 int isStrNumber(char*);
-double** createMatrix(void);
+struct inputMat createMatrix(void);
 int* verifyInput(int, char**);
 void printMat(double**);
 struct input_list getInput(void);
@@ -79,9 +79,9 @@ struct inputMat createMatrix(void){
         for(j = 0; j < vectorsLength; j++, c = *c.next){
             mat[i][j] = c.value;
         }
-        vec = *vec.next;
+        vec = &(vec.next);
     }
-    deleteList(*head);
+    deleteList(&head);
     structinputMat.mat = mat;
     structinputMat.vectorsLength = vectorsLength;
     structinputMat.numOfVectors = numOfVectors;
@@ -92,7 +92,7 @@ struct inputMat createMatrix(void){
 
 void deleteCords(struct cord* head) {
     if (head != NULL) {
-        deleteCords(*(head->next));
+        deleteCords(head->next));
         free(head);
     }
 }
@@ -100,7 +100,7 @@ void deleteCords(struct cord* head) {
 void deleteList(struct vector* vec){
     if (vec != NULL) {
         deleteList(vec->next);
-        deleteCords(*(vec->cords[0]));
+        deleteCords(&(vec->cords[0]));
         free(vec);
     }
 }
