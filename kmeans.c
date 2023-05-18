@@ -174,12 +174,13 @@ int* verifyInput(int a, char **b){
 }
 
 void printMat(double** mat){
-    int il
+    int i;
+    int j;
     for(i=0; i<3; i++) {
-        for(int j=0; j<2; j++) {
+        for(j=0; j<2; j++) {
             printf("%f ", mat[i][j]);
         }
-        printf("\n"); // new line
+        printf("\n");
     }
 }
 
