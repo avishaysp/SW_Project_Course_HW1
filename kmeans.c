@@ -105,8 +105,11 @@ struct inputMat createMatrix(void){
 
 void deleteCords(struct cord* head) {
     if (head != NULL) {
+        printf("%d\n", 14);
         deleteCords(head->next);
+        printf("%d\n", 15);
         free(head);
+        printf("%d\n", 16);
     }
 }
 
