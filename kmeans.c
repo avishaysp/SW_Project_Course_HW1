@@ -223,8 +223,7 @@ struct input_list getInput(void)
     double n;
     char c;
     int numOfVectors = 0, vectorsLength = 0;
-    double** resultMat;
-    double resultVec;
+
 
     head_cord = malloc(sizeof(struct cord));
     curr_cord = head_cord;
