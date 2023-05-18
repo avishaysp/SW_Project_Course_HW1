@@ -79,7 +79,7 @@ struct inputMat createMatrix(void){
         for(j = 0; j < vectorsLength; j++, c = *c.next){
             mat[i][j] = c.value;
         }
-        vec = &(vec.next);
+        vec = *(vec.next);
     }
     deleteList(&head);
     structinputMat.mat = mat;
@@ -92,7 +92,7 @@ struct inputMat createMatrix(void){
 
 void deleteCords(struct cord* head) {
     if (head != NULL) {
-        deleteCords(head->next));
+        deleteCords(head->next);
         free(head);
     }
 }
