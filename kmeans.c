@@ -183,7 +183,7 @@ void printMat(double** mat){
     }
 }
 
-int main(int argc, char **argv){
+int main(){
     printf("%s", "hello");
     double** mat;
     int* input;
@@ -192,14 +192,14 @@ int main(int argc, char **argv){
     int vectorLength;
 
 
-    mat = createMatrix();
+    /*mat = createMatrix();
     input = verifyInput(argc, argv);
     k = input[0];
     iter = input[1];
     free(input);
-    /* numberOfVector = LEN(mat);
-     vectorLength = (mat[0]); */
-    printMat(mat);
+    numberOfVector = LEN(mat);
+     vectorLength = (mat[0]);
+    printMat(mat);*/
     return 0;
 }
 
