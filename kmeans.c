@@ -11,6 +11,17 @@ typedef struct linked_list {
     struct linked_list* next;
 }linked_list;
 
+struct cord
+{
+    double value;
+    struct cord *next;
+};
+struct vector
+{
+    struct vector *next;
+    struct cord *cords;
+};
+
 typedef linked_list ELEMENT;
 typedef ELEMENT* LINK;
 
@@ -61,8 +72,8 @@ int getVectorSize(char* str){
 LINK createList(void){
     LINK head = NULL, tail = NULL;
     size_t len;
+    char* buffer = NULL;
     size_t buffer_size = 0;
-    char* buffer = (char*) malloc(buffer_size * sizeof(char));
     printf("create list\n");
     printf("%d", (int)getline(&buffer, &buffer_size, stdin));
     free(buffer);
@@ -192,22 +203,46 @@ void printMat(double** mat){
     }
 }
 
-int main(int argc, char **argv){
-    double** mat;
-    int* input;
-    int K, iter;
-    int numberOfVector;
+int main(int argc, char **argv)
+{
 
-    printf("x");
-    mat = createMatrix();
-    printf("y");
-    input = verifyInput(argc, argv);
-    K = input[0];
-    iter = input[1];
-    free(input);
-    numberOfVector = LEN(mat);
-    kMeans(K, iter, numberOfVector, 5, 0.01, mat);
-    printMat(mat);
+    struct vector *head_vec, *curr_vec, *next_vec;
+    struct cord *head_cord, *curr_cord, *next_cord;
+    int i, j, rows = 0, cols;
+    double n;
+    char c;
+
+    head_cord = malloc(sizeof(struct cord));
+    curr_cord = head_cord;
+    curr_cord->next = NULL;
+
+    head_vec = malloc(sizeof(struct vector));
+    curr_vec = head_vec;
+    curr_vec->next = NULL;
+
+
+    while (scanf("%lf%c", &n, &c) == 2)
+    {
+
+        if (c == '\n')
+        {
+            curr_cord->value = n;
+            curr_vec->cords = head_cord;
+            curr_vec->next = malloc(sizeof(struct vector));
+            curr_vec = curr_vec->next;
+            curr_vec->next = NULL;
+            head_cord = malloc(sizeof(struct cord));
+            curr_cord = head_cord;
+            curr_cord->next = NULL;
+            continue;
+        }
+
+        curr_cord->value = n;
+        curr_cord->next = malloc(sizeof(struct cord));
+        curr_cord = curr_cord->next;
+        curr_cord->next = NULL;
+    }
+
     return 0;
 }
 
