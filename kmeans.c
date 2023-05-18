@@ -83,7 +83,9 @@ struct inputMat createMatrix(void){
         for(j = 0; j < vectorsLength; j++){
             printf("%d\n", 4);
             mat[i][j] = c.value;
-            c = *c.next;
+            if (j < vectorsLength - 1) {
+                c = *c.next;
+            }
             printf("%d\n", 5);
         }
         printf("%d\n", 6);
