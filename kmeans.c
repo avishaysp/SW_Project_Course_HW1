@@ -4,12 +4,14 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define LEN(arr) ((int) (sizeof (arr) / sizeof (arr)[0]))
+#define max(a, b) ((a) > (b) ? (a) : (b))
 
-typedef struct linked_list {
-    char* data;
-    struct linked_list* next;
-}linked_list;
+typedef struct Centroid
+{
+    double* selfVector;
+    int numOfVectors;
+    double** relatedVectors;
+}Centroid;
 
 struct cord
 {
@@ -30,26 +32,20 @@ struct input_list
 
 };
 
-typedef linked_list ELEMENT;
-typedef ELEMENT* LINK;
+struct inputMat
+{
+    double** mat;
+    int numOfVectors;
+    int vectorsLength;
+};
 
+
+void deleteList(struct vector* vec);
 int isStrNumber(char*);
 double** createMatrix(void);
 int* verifyInput(int, char**);
-int getVectorSize(char*);
-int countElements(LINK);
-LINK createList(void);
 void printMat(double**);
 struct input_list getInput(void);
-
-#define max(a, b) ((a) > (b) ? (a) : (b))
-
-typedef struct Centroid
-{
-    double* selfVector;
-    int numOfVectors;
-    double** relatedVectors;
-}Centroid;
 
 double** deepCopy2DArray(double** inputArray, int rows, int columns);
 double* copyArray(double* inputArray, int rows);
@@ -65,84 +61,48 @@ double** getCentroidsSelfVectors(Centroid* centroids, int K);
 int countDigitsOfWholePart(double value);
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
 
-int getVectorSize(char* str){
-    int i;
-    int size = 1;
-    int len = (int) strlen(str);
-    for(i=0; i < len; i++){
-        if (str[i] == ','){
-            size++;
-        }
-    }
-    return size;
-}
-
-LINK createList(void){
-    LINK head = NULL, tail = NULL;
-    size_t len;
-    char* buffer = NULL;
-    size_t buffer_size = 0;
-    printf("create list\n");
-    printf("%d", (int)getline(&buffer, &buffer_size, stdin));
-    free(buffer);
-    printf("1");
-    if (getline(&buffer, &buffer_size, stdin) != -1){
-        printf("0");
-        len = strlen(buffer);
-        if (len > 0 && buffer[len - 1] == '\n') {
-            buffer[len - 1] = '\0';
-        }
-        printf("1");
-        head = (ELEMENT*)malloc(sizeof(ELEMENT));
-        printf("2");
-        head->data = buffer;
-        tail = head;
-        while (getline(&buffer, &buffer_size, stdin) != -1) {
-            len = strlen(buffer);
-            if (len > 0 && buffer[len - 1] == '\n') {
-                buffer[len - 1] = '\0';
-            }
-            tail->next = (ELEMENT*)malloc(sizeof(ELEMENT));
-            tail = tail -> next;
-            tail -> data = buffer;
-        }
-        tail -> next = NULL;
-    }
-    printf("michutz laif");
-    return head;
-}
-
-int countElements(LINK head){
-    int cnt = 0;
-    for (;head !=NULL; head = head->next){
-        ++cnt;
-    }
-    return cnt;
-}
 
 double** createMatrix(void){
-    double num;
     int i, j;
-    char *word, *token;
-    LINK head = createList();
-    int numOfVectors = countElements(head);
-    int vectorSize = getVectorSize(head->data);
-    double** mat = (double**) malloc(numOfVectors * sizeof(double*));
+    struct input_list input = getInput();
+    struct inputMat structinputMat;
+    double** mat;
+    struct vector head = input.vectors[0];
+    struct vector vec = head;
+    struct cord c;
+    int numOfVectors = input.numOfVectors;
+    int vectorsLength = input.vectorLength;
+    mat = (double**) malloc(numOfVectors * sizeof(double*));
     for(i = 0; i < numOfVectors; i++){
         mat[i] = (double*) malloc(vectorSize * sizeof(double));
-        j = 0;
-        word = head -> data;
-        token = strtok(word, ",");
-        while (token != NULL) {
-            num = strtod(token, NULL);
-            mat[i][j] = num;
-            j++;
-            token = strtok(NULL, "'");
+        c = vec.cords[0];
+        for(j = 0; j < vectorsLength; j++, c = c->next){
+            mat[i][j] = c.value;
         }
-        free(head);
-        head = head -> next;
+        vec = vec.next;
     }
-    return mat;
+    deleteList(head);
+    structinputMat.mat = mat;
+    structinputMat.vectorsLength = vectorsLength;
+    structinputMat.numOfVectors = numOfVectors;
+    return structinputMat;
+}
+
+
+
+void deleteCords(struct cord* head) {
+    if (head != NULL) {
+        deleteCords(head->next);
+        free(head);
+    }
+}
+
+void deleteList(struct vector* vec){
+    if (vec != NULL) {
+        deleteList(vec->next);
+        deleteCords(vec->cords[0]);
+        free(vec);
+    }
 }
 
 int isStrNumber(char* str){
@@ -211,10 +171,18 @@ void printMat(double** mat){
     }
 }
 
-int main(void)
+int main(int argc, char** argv)
 {
-    struct input_list input = getInput();
-    printf("%d", input.vectorLength);
+    struct inputMat input = createMatrix();
+    int K, iter, vectorsLength, numOfVectors;
+    double** kMeansResult;
+    int* inputConsts = verifyInput(argc, argv);
+    K = inputConsts[0];
+    iter = inputConsts[1];
+    numOfVectors = input.numOfVectors;
+    vectorsLength = input.vectorsLength;
+    free(inputConsts);
+    kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
     return 0;
 }
 
