@@ -84,7 +84,7 @@ struct inputMat createMatrix(void){
         }
         vec = *(vec.next);
     }
-    deleteList(&head);
+    deleteList(&(head.next));
     printf("%d\n", 9);
     structinputMat.mat = mat;
     structinputMat.vectorsLength = vectorsLength;
@@ -111,10 +111,12 @@ void deleteList(struct vector* vec){
         printf("%d\n", 11);
         deleteCords(&(vec->cords[0]));
         printf("%d\n", 12);
-        free(&vec);
+        free(vec);
         printf("%d\n", 13);
     }
 }
+
+
 
 int isStrNumber(char* str){
     int i;
