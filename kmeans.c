@@ -214,7 +214,7 @@ void printMat(double** mat){
 int main(void)
 {
     struct input_list input = getInput();
-    printf("%d", input.numOfVectors);
+    printf("%d", input.vectorLength);
     return 0;
 }
 
