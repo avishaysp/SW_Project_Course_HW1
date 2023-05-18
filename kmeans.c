@@ -242,7 +242,13 @@ int main(int argc, char **argv)
         curr_cord = curr_cord->next;
         curr_cord->next = NULL;
     }
-
+    cols++;
+    rows++;
+    j++;
+    next_cord++;
+    nextvec++;
+    argc++;
+    argv++;
     return 0;
 }
 
