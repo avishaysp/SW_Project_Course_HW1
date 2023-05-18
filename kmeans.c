@@ -184,6 +184,7 @@ void printMat(double** mat){
 }
 
 int main(){
+    exit(1);
     printf("%s", "hello");
     double** mat;
     int* input;
