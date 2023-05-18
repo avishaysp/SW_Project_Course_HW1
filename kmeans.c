@@ -203,12 +203,11 @@ void printMat(double** mat){
     }
 }
 
-int main(int argc, char **argv)
+int main(void)
 {
 
-    struct vector *head_vec, *curr_vec, *next_vec;
-    struct cord *head_cord, *curr_cord, *next_cord;
-    int i, j, rows = 0, cols;
+    struct vector *head_vec, *curr_vec;
+    struct cord *head_cord, *curr_cord;
     double n;
     char c;
 
