@@ -225,7 +225,7 @@ struct input_list getInput(void)
     struct cord *head_cord, *curr_cord;
     double n;
     char c;
-    int numOfVectors = 0, vectorsLength = 0;
+    int numOfVectors = 0, vectorsLength = 1;
 
 
     head_cord = malloc(sizeof(struct cord));
