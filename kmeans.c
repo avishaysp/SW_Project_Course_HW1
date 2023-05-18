@@ -256,7 +256,13 @@ struct input_list getInput(void)
 
     return input;
 }
-
+void printVector(double *vec, int vectorsLength) {
+    int i;
+    for (i = 0;i < vectorsLength; i++) {
+        printf("%f,", vec[i]);
+    }
+    printf("\n");
+}
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
     int i;
     int currentIteration = 0;
@@ -279,6 +285,10 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
             printf("%d\n", 34);
             closestCentroid = calcClosestCentroid(vectorsList[i], &centroids, K, vectorsLength);
             printf("%d\ni: %d\n", 35, i);
+            printf("Centroid:")
+            printVector(closestCentroid->selfVector, vectorsLength);
+            printf("Vector:")
+            printVector(vectorsList[i], vectorsLength);
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
             printf("%d\n", 36);
             closestCentroid->numOfVectors++;
