@@ -92,7 +92,9 @@ struct inputMat createMatrix(void){
         vec = *(vec.next);
         printf("%d\n", 7);
     }
+    printf("%d\n", 8);
     deleteList(&head);
+    printf("%d\n", 9);
     structinputMat.mat = mat;
     structinputMat.vectorsLength = vectorsLength;
     structinputMat.numOfVectors = numOfVectors;
