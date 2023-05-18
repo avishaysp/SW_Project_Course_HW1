@@ -405,7 +405,7 @@ double euclidianDistance(double *vector1, double *vector2, int vectorsLength) {
     double sum = 0.0;
     int i;
     for (i = 0; i < vectorsLength; i++) {
-        sum += pow(vector1[i] - vector2[i], 2);
+        sum += pow(*(vector1[i]) - *(vector2[i]), 2);
     }
     return sqrt(sum);
 }
