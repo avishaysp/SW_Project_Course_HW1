@@ -183,7 +183,7 @@ void printMat(double** mat){
     }
 }
 
-int main(){
+int main(void){
     exit(1);
     printf("%s", "hello");
     double** mat;
