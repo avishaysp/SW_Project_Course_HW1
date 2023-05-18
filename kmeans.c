@@ -101,8 +101,7 @@ double** createMatrix(void){
     double num;
     int i, j;
     char *word, *token;
-    LINK head = NULL;
-    head = createList();
+    LINK head = createList();
     int numOfVectors = countElements(head);
     int vectorSize = getVectorSize(head->data);
     double** mat = (double**) malloc(numOfVectors * sizeof(double*));
