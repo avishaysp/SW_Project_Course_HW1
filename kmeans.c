@@ -184,13 +184,6 @@ void printMat(double** mat){
 }
 
 int main(void){
-    double** mat;
-    int* input;
-    int k, iter;
-    int numberOfVector;
-    int vectorLength;
-    exit(1);
-    printf("%s", "hello");
     return 0;
 }
 
