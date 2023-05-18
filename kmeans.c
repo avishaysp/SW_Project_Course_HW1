@@ -9,12 +9,12 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     int i;
     int currentIteration = 0;
     double maxMiuK;
-    Centroid* closestCentroid;
-    double** vectorsListCopy = deepCopy2DArray(vectorsList, numberOfVectors, vectorsLength);
+    Centroid *closestCentroid;
+    double **result;
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
     for (i = 0; i < K; i++) {
-        centroids[i].selfVector = copyArray(vectorsListCopy[i], vectorsLength);
+        centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
         centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
     }
     do
@@ -32,7 +32,12 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
         maxMiuK = maxDelta(deltas, numberOfVectors);
         currentIteration++;
     } while (currentIteration < iter && maxMiuK >= eps);
-    return getCentroidsSelfVectors(centroids, K, vectorsLength);
+    result = getCentroidsSelfVectors(centroids, K);
+    for (i = 0; i < K; i++) {
+        freeRelatedVectors(&(centroids[i]));
+    }
+    free(centroids);
+    return result;
 }
 
 double maxDelta(double *deltas, int numberOfVectors) {
@@ -46,7 +51,6 @@ double maxDelta(double *deltas, int numberOfVectors) {
 double update(Centroid* centroid, int vectorsLength) {
     int i;
     double delta;
-    double** vectors_list = deepCopy2DArray(centroid->relatedVectors, centroid->numOfVectors, vectorsLength);
     double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
@@ -57,7 +61,7 @@ double update(Centroid* centroid, int vectorsLength) {
     return delta;
 }
 
-double** getCentroidsSelfVectors(Centroid* centroids, int K, int vectorsLength) {
+double** getCentroidsSelfVectors(Centroid* centroids, int K) {
     int i;
     double** selfVectors = (double**) malloc(K * sizeof(double*));
     for (i = 0; i < K; i ++) {
@@ -99,11 +103,10 @@ Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int v
     return closestCentroid;
 }
 
-
 char* roundedDouble(double* pDouble) {
-    int bufferSize = snprintf(NULL, 0, "%.4f", *pDouble);
-    char* rounded = (char*)malloc((bufferSize + 1) * sizeof(char));
-    snprintf(rounded, bufferSize + 1, "%.4f", *pDouble);
+    int numOfDigsInWholePart = countDigitsOfWholePart(*pDouble);
+    char* rounded = (char*)malloc((1 + numOfDigsInWholePart + 1 + 4 + 1) * sizeof(char)); /* minus, radix, precision, null terminator */
+    sprintf(rounded, "%.4f", *pDouble);
     return rounded;
 }
 
@@ -170,4 +173,15 @@ void zeroArray(double* array, int arrayLength) {
     int i;
     for (i = 0; i < arrayLength; i++)
         array[i] = 0.0;
+}
+
+int countDigitsOfWholePart(double value) {
+    int count = 1;
+    if (value < 0)
+        value = -value;
+    while (value >= 10) {
+        value /= 10;
+        count++;
+    }
+    return count;
 }
