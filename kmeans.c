@@ -61,8 +61,8 @@ int getVectorSize(char* str){
 LINK createList(void){
     LINK head = NULL, tail = NULL;
     size_t len;
-    char* buffer = NULL;
     size_t buffer_size = 0;
+    char* buffer = (char*) malloc(buffer_size * sizeof(char));
     printf("create list\n");
     printf("%d", (int)getline(&buffer, &buffer_size, stdin));
     free(buffer);
