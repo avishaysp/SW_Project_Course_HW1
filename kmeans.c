@@ -199,11 +199,14 @@ int main(int argc, char** argv)
     int* inputConsts;
     input = createMatrix();
     inputConsts = verifyInput(argc, argv);
+    printf("%d\n", 20);
     K = inputConsts[0];
     iter = inputConsts[1];
     numOfVectors = input.numOfVectors;
     vectorsLength = input.vectorsLength;
+    printf("%d\n", 21);
     free(inputConsts);
+    printf("%d\n", 22);
     kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
     printf("%f", kMeansResult[0][0]);
     return 0;
