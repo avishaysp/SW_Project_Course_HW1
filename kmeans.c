@@ -72,27 +72,19 @@ struct inputMat createMatrix(void){
     int numOfVectors = input.numOfVectors;
     int vectorsLength = input.vectorLength;
     printf("%d\n", vectorsLength);
-    printf("%d\n", 1);
     mat = (double**) malloc(numOfVectors * sizeof(double*));
-    printf("%d\n", 2);
     for(i = 0; i < numOfVectors; i++){
         mat[i] = (double*) malloc(vectorsLength * sizeof(double));
-        printf("%d\n", 3);
         c = vec.cords[0];
         for(j = 0; j < vectorsLength; j++){
-            printf("%d\n", 4);
             mat[i][j] = c.value;
             if (j < vectorsLength - 1) {
                 c = *c.next;
             }
-            printf("%d\n", 5);
         }
-        printf("%d\n", 6);
         vec = *(vec.next);
-        printf("%d\n", 7);
     }
-    printf("%d\n", 8);
-    /* deleteList(&(head[0])); */
+    deleteList(&(head[0]));
     printf("%d\n", 9);
     structinputMat.mat = mat;
     structinputMat.vectorsLength = vectorsLength;
@@ -186,7 +178,6 @@ void printMat(double** mat, int vectorsLength, int numOfVectors){
         for(j=0; j<vectorsLength; j++) {
             printf("%f,", mat[i][j]);
         }
-        printf("\n");
         printf("\n");
     }
 }
