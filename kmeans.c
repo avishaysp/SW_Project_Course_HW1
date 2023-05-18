@@ -1,6 +1,7 @@
 #include "kmeans.h"
 
 int main() {
+    printf('a');
     return 0;
 }
 
@@ -18,7 +19,7 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     }
     do
     {
-        for (i = 0; i < numberOfVectors; i ++) {
+        for (i = 0; i < numberOfVectors; i++) {
             closestCentroid = calcClosestCentroid(vectorsList[i], &centroids, K, vectorsLength);
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
             closestCentroid->numOfVectors++;
