@@ -72,9 +72,12 @@ struct inputMat createMatrix(void){
     struct cord c;
     int numOfVectors = input.numOfVectors;
     int vectorsLength = input.vectorLength;
+    printf("%d\n", 1);
     mat = (double**) malloc(numOfVectors * sizeof(double*));
+    printf("%d\n", 2);
     for(i = 0; i < numOfVectors; i++){
         mat[i] = (double*) malloc(vectorsLength * sizeof(double));
+        printf("%d\n", 3);
         c = vec.cords[0];
         for(j = 0; j < vectorsLength; j++, c = *c.next){
             mat[i][j] = c.value;
@@ -173,9 +176,10 @@ void printMat(double** mat){
 
 int main(int argc, char** argv)
 {
-    struct inputMat input = createMatrix();
+    struct inputMat input;
     int K, iter, vectorsLength, numOfVectors;
     double** kMeansResult;
+    input = createMatrix();
     int* inputConsts = verifyInput(argc, argv);
     K = inputConsts[0];
     iter = inputConsts[1];
