@@ -242,14 +242,6 @@ int main(int argc, char **argv)
         curr_cord = curr_cord->next;
         curr_cord->next = NULL;
     }
-    cols++;
-    rows++;
-    j++;
-    i++;
-    next_cord++;
-    next_vec++;
-    argc++;
-    argv++;
     return 0;
 }
 
