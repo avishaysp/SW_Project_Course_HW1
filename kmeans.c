@@ -80,8 +80,10 @@ struct inputMat createMatrix(void){
         printf("%d\n", 3);
         c = vec.cords[0];
         for(j = 0; j < vectorsLength; j++, c = *c.next){
+            printf("%d\n", 4);
             mat[i][j] = c.value;
         }
+        printf("%d\n", 5);
         vec = *(vec.next);
     }
     deleteList(&head);
