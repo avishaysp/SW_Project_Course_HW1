@@ -200,7 +200,6 @@ int main(int argc, char** argv)
     printf("%d\n", 21);
     free(inputConsts);
     printf("%d\n", 22);
-    printMat(input.mat, vectorsLength, numOfVectors);
     kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
     printf("%f", kMeansResult[0][0]);
     return 0;
@@ -266,9 +265,13 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     double **result;
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
+    printf("%d\n", 30);
     for (i = 0; i < K; i++) {
+        printf("%d\n", 31);
         centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
+        printf("%d\n", 32);
         centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
+        printf("%d\n", 33);
     }
     do
     {
