@@ -72,6 +72,7 @@ struct inputMat createMatrix(void){
     struct cord c;
     int numOfVectors = input.numOfVectors;
     int vectorsLength = input.vectorLength;
+    printf("%d\n", vectorsLength);
     printf("%d\n", 1);
     mat = (double**) malloc(numOfVectors * sizeof(double*));
     printf("%d\n", 2);
