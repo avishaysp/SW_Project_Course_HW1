@@ -184,6 +184,7 @@ void printMat(double** mat){
 }
 
 int main(void){
+    printf("Hello MF!")
     return 0;
 }
 
