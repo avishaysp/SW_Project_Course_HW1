@@ -86,6 +86,7 @@ LINK createList(void){
         }
         tail -> next = NULL;
     }
+    printf("michutz laif");
     return head;
 }
 
