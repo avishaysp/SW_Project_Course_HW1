@@ -186,20 +186,18 @@ void printMat(double** mat){
 int main(int argc, char **argv){
     double** mat;
     int* input;
-    int k, iter;
+    int K, iter;
     int numberOfVector;
-    int vectorLength;
 
     printf("x");
     mat = createMatrix();
     printf("y");
     input = verifyInput(argc, argv);
-    k = input[0];
+    K = input[0];
     iter = input[1];
     free(input);
-    /numberOfVector = LEN(mat);
-     vectorLength = (mat[0]);
-    kMeans(K, iter, numberOfVector, vectorLength, 0.01, mat);
+    numberOfVector = LEN(mat);
+    kMeans(K, iter, numberOfVector, 5, 0.01, mat);
     printMat(mat);
     return 0;
 }
