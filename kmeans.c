@@ -62,7 +62,7 @@ int countDigitsOfWholePart(double value);
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
 
 
-double** createMatrix(void){
+struct inputMat createMatrix(void){
     int i, j;
     struct input_list input = getInput();
     struct inputMat structinputMat;
@@ -74,14 +74,14 @@ double** createMatrix(void){
     int vectorsLength = input.vectorLength;
     mat = (double**) malloc(numOfVectors * sizeof(double*));
     for(i = 0; i < numOfVectors; i++){
-        mat[i] = (double*) malloc(vectorSize * sizeof(double));
+        mat[i] = (double*) malloc(vectorsLength * sizeof(double));
         c = vec.cords[0];
-        for(j = 0; j < vectorsLength; j++, c = c->next){
+        for(j = 0; j < vectorsLength; j++, c = *c.next){
             mat[i][j] = c.value;
         }
-        vec = vec.next;
+        vec = *vec.next;
     }
-    deleteList(head);
+    deleteList(*head);
     structinputMat.mat = mat;
     structinputMat.vectorsLength = vectorsLength;
     structinputMat.numOfVectors = numOfVectors;
@@ -92,7 +92,7 @@ double** createMatrix(void){
 
 void deleteCords(struct cord* head) {
     if (head != NULL) {
-        deleteCords(head->next);
+        deleteCords(*(head->next));
         free(head);
     }
 }
@@ -100,7 +100,7 @@ void deleteCords(struct cord* head) {
 void deleteList(struct vector* vec){
     if (vec != NULL) {
         deleteList(vec->next);
-        deleteCords(vec->cords[0]);
+        deleteCords(*(vec->cords[0]));
         free(vec);
     }
 }
@@ -183,6 +183,7 @@ int main(int argc, char** argv)
     vectorsLength = input.vectorsLength;
     free(inputConsts);
     kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
+    printf("%f", kMeansResult[0][0]);
     return 0;
 }
 
