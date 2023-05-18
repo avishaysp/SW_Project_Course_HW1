@@ -22,10 +22,6 @@ int countElements(LINK);
 LINK createList(void);
 void printMat(double**);
 
-#include <stdlib.h>
-#include <stdio.h>
-#include <math.h>
-#include <assert.h>
 
 #define max(a, b) ((a) > (b) ? (a) : (b))
 
