@@ -176,7 +176,8 @@ void printMat(double** mat, int vectorsLength, int numOfVectors){
     }
 }
 
-int main(int argc, char** argv)
+/*int argc, char** argv*/
+int main()
 {
     tests();/*
     struct inputMat input;
@@ -452,13 +453,13 @@ int countDigitsOfWholePart(double value) {
 }
 
 void tests(void) {
-    double *vec1 = (double**)malloc(2 * sizeof(double));
-    double *vec2 = (double**)malloc(2 * sizeof(double));
+    double *vec1 = (double*)malloc(2 * sizeof(double));
+    double *vec2 = (double*)malloc(2 * sizeof(double));
     vec1[0] = 1.0;
     vec1[1] = 0.0;
     vec2[0] = 0.0;
     vec2[1] = 1.0;
-    printf("%d", euclidianDistance(vec1, vec2, 2));
+    printf("%f", euclidianDistance(vec1, vec2, 2));
     free(vec1);
     free(vec2);
 }
