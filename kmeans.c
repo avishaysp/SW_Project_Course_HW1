@@ -262,14 +262,14 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     double maxMiuK;
     Centroid *closestCentroid;
     double **result;
-    Centroid** centroids = (Centroid**)malloc(K * sizeof(Centroid*));
+    Centroid* centroids = (Centroid**)malloc(K * sizeof(Centroid*));
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
     /*Create Centroids*/
     for (i = 0; i < K; i++) {
-    centroids[i]->selfVector = copyArray(vectorsList[i], vectorsLength);
+    centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
         printf("Centroid num: %d\n", i);
-        printVector(centroids[i]->selfVector, vectorsLength);
-        centroids[i]->relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
+        printVector(centroids[i].selfVector, vectorsLength);
+        centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
     }
     do
     {
@@ -288,14 +288,14 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
 
         zeroArray(deltas, vectorsLength);
         for (i = 0; i < K; i++) {
-            deltas[i] = update(centroids[i], vectorsLength);
+            deltas[i] = update(&centroids[i], vectorsLength);
         }
         maxMiuK = maxDelta(deltas, numberOfVectors);
         currentIteration++;
     } while (currentIteration < iter && maxMiuK >= eps);
-    result = getCentroidsSelfVectors(*centroids, K);
+    result = getCentroidsSelfVectors(centroids, K);
     for (i = 0; i < K; i++) {
-        freeRelatedVectors(centroids[i]);
+        freeRelatedVectors(&centroids[i]);
     }
     free(centroids);
     return result;
@@ -361,7 +361,7 @@ Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int v
     printf("calcClosestCentroid:\n");
     for (i = 1; i < K; i++) {
         if (centroids[1]->selfVector == NULL) {
-            printf("wtf\n");
+            printf("wtf\n")
         }
         printf("Centroid num: %d\n", i);
         printf("%d\n", centroids[1]->numOfVectors);
