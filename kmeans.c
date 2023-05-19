@@ -178,12 +178,12 @@ void printMat(double** mat, int vectorsLength, int numOfVectors){
 
 int main(int argc, char** argv)
 {
+    tests();/*
     struct inputMat input;
     int K, iter, vectorsLength, numOfVectors;
     double** kMeansResult;
     int* inputConsts;
-    tests();
-    /*
+    
     input = createMatrix();
     inputConsts = verifyInput(argc, argv);
     K = inputConsts[0];
