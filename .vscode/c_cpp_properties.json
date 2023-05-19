@@ -9,7 +9,8 @@
             "cStandard": "c99",
             "cppStandard": "gnu++14",
             "intelliSenseMode": "linux-gcc-x64",
-            "C_Cpp.errorSquiggles": "Enabled"
+            "C_Cpp.errorSquiggles": "Enabled",
+            "compilerPath": "/usr/bin/gcc"
         }
     ],
     "version": 4

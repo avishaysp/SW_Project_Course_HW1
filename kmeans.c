@@ -61,6 +61,29 @@ int countDigitsOfWholePart(double value);
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
 
 
+
+
+void deleteList(struct vector* vec);
+int isStrNumber(char*);
+struct inputMat createMatrix(void);
+int* verifyInput(int, char**);
+void printMat(double** mat, int vectorsLength, int numOfVectors);
+struct input_list getInput(void);
+double** deepCopy2DArray(double** inputArray, int rows, int columns);
+double* copyArray(double* inputArray, int rows);
+double update(Centroid* centroid, int vectorsLength);
+Centroid* calcClosestCentroid(double *vector, Centroid **centroids, int K, int vectorsLength);
+double euclidianDistance(double *vector1, double *vector2, int vectorsLength);
+double* copyArray(double* inputArray, int rows);
+void zeroArray(double* array, int arrayLength);
+double averageOf(Centroid* centroid, int i);
+void freeRelatedVectors(Centroid* centroid);
+double maxDelta(double *deltas, int numberOfVectors);
+double** getCentroidsSelfVectors(Centroid* centroids, int K);
+int countDigitsOfWholePart(double value);
+double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
+
+
 struct inputMat createMatrix(void){
     int i, j;
     struct input_list input = getInput();
@@ -85,7 +108,6 @@ struct inputMat createMatrix(void){
         vec = *(vec.next);
     }
     deleteList(head.next);
-    printf("%d\n", 9);
     structinputMat.mat = mat;
     structinputMat.vectorsLength = vectorsLength;
     structinputMat.numOfVectors = numOfVectors;
@@ -96,23 +118,16 @@ struct inputMat createMatrix(void){
 
 void deleteCords(struct cord* head) {
     if (head != NULL) {
-        printf("%d\n", 14);
         deleteCords(head->next);
-        printf("%d\n", 15);
         free(head);
-        printf("%d\n", 16);
     }
 }
 
 void deleteList(struct vector* vec){
     if (vec != NULL) {
-        printf("%d\n", 10);
         deleteList(vec->next);
-        printf("%d\n", 11);
         deleteCords(&(vec->cords[0]));
-        printf("%d\n", 12);
         free(vec);
-        printf("%d\n", 13);
     }
 }
 
@@ -192,14 +207,11 @@ int main(int argc, char** argv)
     int* inputConsts;
     input = createMatrix();
     inputConsts = verifyInput(argc, argv);
-    printf("%d\n", 20);
     K = inputConsts[0];
     iter = inputConsts[1];
     numOfVectors = input.numOfVectors;
     vectorsLength = input.vectorsLength;
-    printf("%d\n", 21);
     free(inputConsts);
-    printf("%d\n", 22);
     kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
     printf("%f", kMeansResult[0][0]);
     return 0;
@@ -271,15 +283,11 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     double **result;
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
-    printf("%d\n", 30);
     for (i = 0; i < K; i++) {
-        printf("%d\n", 31);
         centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
         printf("Centroid num: %d\n", i);
         printVector(centroids[i].selfVector, vectorsLength);
-        printf("%d\n", 32);
         centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
-        printf("%d\n", 33);
     }
     do
     {
@@ -287,9 +295,9 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
             printf("%d\n", 34);
             closestCentroid = calcClosestCentroid(vectorsList[i], &centroids, K, vectorsLength);
             printf("%d\ni: %d\n", 35, i);
-            printf("Centroid:");
+            printf("Centroid: ");
             printVector(closestCentroid->selfVector, vectorsLength);
-            printf("Vector:");
+            printf("Vector: ");
             printVector(vectorsList[i], vectorsLength);
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
             printf("%d\n", 36);
@@ -461,4 +469,9 @@ int countDigitsOfWholePart(double value) {
         count++;
     }
     return count;
+}
+
+void tests(void) {
+    double *vec1 = (double**)malloc(3 * sizeof(double));
+    double *vec2 = (double**)malloc(3 * sizeof(double));
 }
