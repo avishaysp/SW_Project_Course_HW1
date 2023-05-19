@@ -268,6 +268,7 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     for (i = 0; i < K; i++) {
         printf("x\n");
         centroids[i]->selfVector = copyArray(vectorsList[i], vectorsLength);
+        printf("x\n");
         centroids[i]->numOfVectors = 0;
         printf("Centroid num: %d\n", i);
         printVector(centroids[i]->selfVector, vectorsLength);
