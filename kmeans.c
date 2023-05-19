@@ -266,7 +266,7 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
     /*Create Centroids*/
     for (i = 0; i < K; i++) {
-        centroids[i]->selfVector = copyArray(vectorsList[i], vectorsLength);
+    centroids[i]->selfVector = copyArray(vectorsList[i], vectorsLength);
         printf("Centroid num: %d\n", i);
         printVector(centroids[i]->selfVector, vectorsLength);
         centroids[i]->relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
@@ -360,6 +360,9 @@ Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int v
     printVector(vector, vectorsLength);
     printf("calcClosestCentroid:\n");
     for (i = 1; i < K; i++) {
+        if (centroids[1]->selfVector == NULL) {
+            printf("wtf\n");
+        }
         printf("Centroid num: %d\n", i);
         printf("%d\n", centroids[1]->numOfVectors);
         printVector(centroids[i]->selfVector, vectorsLength);
