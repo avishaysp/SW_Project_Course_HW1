@@ -61,29 +61,6 @@ int countDigitsOfWholePart(double value);
 double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
 
 
-
-
-void deleteList(struct vector* vec);
-int isStrNumber(char*);
-struct inputMat createMatrix(void);
-int* verifyInput(int, char**);
-void printMat(double** mat, int vectorsLength, int numOfVectors);
-struct input_list getInput(void);
-double** deepCopy2DArray(double** inputArray, int rows, int columns);
-double* copyArray(double* inputArray, int rows);
-double update(Centroid* centroid, int vectorsLength);
-Centroid* calcClosestCentroid(double *vector, Centroid **centroids, int K, int vectorsLength);
-double euclidianDistance(double *vector1, double *vector2, int vectorsLength);
-double* copyArray(double* inputArray, int rows);
-void zeroArray(double* array, int arrayLength);
-double averageOf(Centroid* centroid, int i);
-void freeRelatedVectors(Centroid* centroid);
-double maxDelta(double *deltas, int numberOfVectors);
-double** getCentroidsSelfVectors(Centroid* centroids, int K);
-int countDigitsOfWholePart(double value);
-double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
-
-
 struct inputMat createMatrix(void){
     int i, j;
     struct input_list input = getInput();
@@ -472,6 +449,14 @@ int countDigitsOfWholePart(double value) {
 }
 
 void tests(void) {
-    double *vec1 = (double**)malloc(3 * sizeof(double));
-    double *vec2 = (double**)malloc(3 * sizeof(double));
+    double *vec1 = (double**)malloc(2 * sizeof(double));
+    double *vec2 = (double**)malloc(2 * sizeof(double));
+    int i;
+    vec1[0] = 1.0;
+    vec1[1] = 0.0;
+    vec2[0] = 0.0;
+    vec2[1] = 1.0;
+    printf("%d", euclidianDistance(vec1, vec2, 2));
+    free(vec1);
+    free(vec2);
 }
