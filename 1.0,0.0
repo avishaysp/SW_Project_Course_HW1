@@ -1,0 +1,97 @@
+#define _GNU_SOURCE
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#define max(a, b) ((a) > (b) ? (a) : (b))
+
+typedef struct Centroid
+{
+    double* selfVector;
+    int numOfVectors;
+    double** relatedVectors;
+}Centroid;
+
+
+void tests(void);
+double* copyArray(double* inputArray, int rows);
+struct Centroid* calcClosestCentroid(double *vector, Centroid **centroids, int K, int vectorsLength);
+double euclidianDistance(double *vector1, double *vector2, int vectorsLength);
+double* copyArray(double* inputArray, int rows);
+int kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
+
+int main()
+{
+    tests();
+    return 0;
+}
+
+int kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
+    int i;
+    int currentIteration = 0;
+    double maxMiuK;
+    Centroid *closestCentroid;
+    Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
+    double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
+    for (i = 0; i < K; i++) {
+        centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
+        centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
+        centroids[i].numOfVectors = 0;
+    }
+    do
+    {
+        for (i = 0; i < numberOfVectors; i++) {
+            closestCentroid = calcClosestCentroid(vectorsList[i], &centroids, K, vectorsLength);
+        }
+    } while (currentIteration < iter && maxMiuK >= eps);
+    return 0;
+}
+
+
+Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int vectorsLength) {
+    int i;
+    Centroid* closestCentroid = (Centroid*)centroids[0];
+    double distToClosest = 3.0;
+    double currentDist;
+    for (i = 1; i < K; i++) {
+        closestCentroid = centroids[i];
+        currentDist = 3.0;
+        if (currentDist < distToClosest) {
+            closestCentroid = centroids[i];
+            distToClosest = currentDist;
+        }
+    }
+    return closestCentroid;
+}
+
+double* copyArray(double* inputArray, int rows) {
+    int i;
+    double* arrayCopy = (double*)malloc(rows * sizeof(double));
+    if (arrayCopy == NULL) 
+        return NULL;
+    for (i = 0; i < rows; i++)
+        arrayCopy[i] = inputArray[i];
+    return arrayCopy;
+}
+
+void tests(void) {
+    double **vecs =(double**)malloc(4 * sizeof(double**));
+    double *vec1 = (double*)malloc(2 * sizeof(double));
+    double *vec2 = (double*)malloc(2 * sizeof(double));
+    double *vec3 = (double*)malloc(2 * sizeof(double));
+    double *vec4 = (double*)malloc(2 * sizeof(double));
+    vec1[0] = 1.0;
+    vec1[1] = 0.0;
+    vec2[0] = 0.0;
+    vec2[1] = 1.0;
+    vec3[0] = -1.0;
+    vec3[1] = 0.0;
+    vec4[0] = 0.0;
+    vec4[1] = -1.0;
+    vecs[0] = vec1;
+    vecs[1] = vec2;
+    vecs[2] = vec3;
+    vecs[3] = vec4;
+    kMeans(2, 10, 4, 2, 0.01, vecs);    
+}
