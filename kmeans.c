@@ -354,6 +354,8 @@ Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int v
     Centroid* closestCentroid = centroids[0];
     double distToClosest = euclidianDistance(vector, centroids[0]->selfVector, vectorsLength);
     double currentDist;
+    printf("Centroid num: %d", 0);
+    printVector(centroids[0]->selfVector, vectorsLength);
     printf("calcClosestCentroid:\n");
     for (i = 1; i < K; i++) {
         printf("Centroid num: %d", i);
@@ -367,6 +369,7 @@ Centroid* calcClosestCentroid(double* vector, Centroid** centroids, int K, int v
             distToClosest = currentDist;
         }
     }
+    printf("Ended For in calcClosestCentroid");
     return closestCentroid;
 }
 
