@@ -293,9 +293,9 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
         maxMiuK = maxDelta(deltas, numberOfVectors);
         currentIteration++;
     } while (currentIteration < iter && maxMiuK >= eps);
-    result = getCentroidsSelfVectors(&centroids, K);
+    result = getCentroidsSelfVectors(centroids, K);
     for (i = 0; i < K; i++) {
-        freeRelatedVectors(&(centroids[i]));
+        freeRelatedVectors(centroids[i]);
     }
     free(centroids);
     return result;
