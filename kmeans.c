@@ -475,5 +475,7 @@ void tests(void) {
     vecs[1] = vec2;
     vecs[2] = vec3;
     vecs[3] = vec4;
+    vec2 = copyArray(vec1, 2);
+    printVector(vec2, 2);
     kMeans(2, 10, 4, 2, 0.01, vecs);    
 }
