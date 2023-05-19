@@ -454,7 +454,6 @@ int countDigitsOfWholePart(double value) {
 void tests(void) {
     double *vec1 = (double**)malloc(2 * sizeof(double));
     double *vec2 = (double**)malloc(2 * sizeof(double));
-    int i;
     vec1[0] = 1.0;
     vec1[1] = 0.0;
     vec2[0] = 0.0;
