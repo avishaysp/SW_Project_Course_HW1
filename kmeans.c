@@ -39,7 +39,7 @@ struct inputMat
     int vectorsLength;
 };
 
-
+void tests(void);
 void deleteList(struct vector* vec);
 int isStrNumber(char*);
 struct inputMat createMatrix(void);
@@ -182,6 +182,8 @@ int main(int argc, char** argv)
     int K, iter, vectorsLength, numOfVectors;
     double** kMeansResult;
     int* inputConsts;
+    tests();
+    /*
     input = createMatrix();
     inputConsts = verifyInput(argc, argv);
     K = inputConsts[0];
@@ -191,6 +193,7 @@ int main(int argc, char** argv)
     free(inputConsts);
     kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
     printf("%f", kMeansResult[0][0]);
+    */
     return 0;
 }
 
