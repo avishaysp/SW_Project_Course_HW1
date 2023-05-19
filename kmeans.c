@@ -453,13 +453,22 @@ int countDigitsOfWholePart(double value) {
 }
 
 void tests(void) {
+    double **vecs =(double**)malloc(4 * sizeof(double**));
     double *vec1 = (double*)malloc(2 * sizeof(double));
     double *vec2 = (double*)malloc(2 * sizeof(double));
+    double *vec3 = (double*)malloc(2 * sizeof(double));
+    double *vec4 = (double*)malloc(2 * sizeof(double));
     vec1[0] = 1.0;
     vec1[1] = 0.0;
     vec2[0] = 0.0;
     vec2[1] = 1.0;
-    printf("%f", euclidianDistance(vec1, vec2, 2));
-    free(vec1);
-    free(vec2);
+    vec3[0] = -1.0;
+    vec3[1] = 0.0;
+    vec4[0] = 0.0;
+    vec4[1] = -1.0;
+    vecs[0] = vec1;
+    vecs[1] = vec2;
+    vecs[2] = vec3;
+    vecs[3] = vec4;
+    kMeans(2, 10, 4, 2, 0.01, vecs);    
 }
