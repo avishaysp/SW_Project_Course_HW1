@@ -25,6 +25,8 @@ typedef struct Vector
     Cord *cords;
 }Vector;
 
+/*FIXME remove*/
+void tests(void);
 
 /*Input functions*/
 void deleteList(Vector*);
@@ -50,6 +52,7 @@ double** kMeans(int, int, int, int, double, double**);
 char* roundedDouble(double*);
 char*** roundedVectors(double**, int, int);
 char** roundedVector(double*, int);
+
 
 double** createMatrix(int* numberOfVectors, int* vectorsLength){
     int i, j;
