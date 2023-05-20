@@ -297,7 +297,7 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
             deltas[i] = update(&centroids[i], vectorsLength);
         }
         printf("The Centroids before updating:\n");
-        printMat(getCentroidsSelfVectors, vectorsLength, K);
+        printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
         maxMiuK = maxDelta(deltas, numberOfVectors);
         zeroArray(deltas, vectorsLength);
         currentIteration++;
