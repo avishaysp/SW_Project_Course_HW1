@@ -1,4 +1,3 @@
-#define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -279,7 +278,7 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
         for (i = 0; i < K; i++) {
             deltas[i] = update(&centroids[i], vectorsLength);
         }
-        printf("The Centroids before updating:\n");
+        printf("The Centroids after updating:\n");
         printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
         maxMiuK = maxDelta(deltas, numberOfVectors);
         zeroArray(deltas, vectorsLength);
