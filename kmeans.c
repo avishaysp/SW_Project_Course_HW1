@@ -47,12 +47,14 @@ double averageOf(Centroid*, int);
 void freeRelatedVectors(Centroid*);
 double maxDelta(double*, int);
 double** getCentroidsSelfVectors(Centroid*, int);
-int countDigitsOfWholePart(double);
 double** kMeans(int, int, int, int, double, double**);
 char* roundedDouble(double*);
 char*** roundedVectors(double**, int, int);
 char** roundedVector(double*, int);
 
+#ifdef DEBUG
+void printVector(double, int);
+#endif
 
 double** createMatrix(int* numberOfVectors, int* vectorsLength){
     int i, j;
@@ -155,6 +157,7 @@ int* verifyInput(int a, char **b, int numberOfVectors){
 void printMat(double** mat, int vectorsLength, int numOfVectors){
     int i;
     int j;
+
     for(i=0; i<numOfVectors; i++) {
         for(j=0; j<vectorsLength; j++) {
             printf("%.4f", mat[i][j]);
@@ -225,6 +228,7 @@ Vector* getInput(int* numOfVectors, int* vectorsLength)
     *vectorsLength = length;
     return head_vec;
 }
+
 #ifdef DEBUG
 void printVector(double *vec, int vectorsLength) {
     int i;
@@ -234,6 +238,7 @@ void printVector(double *vec, int vectorsLength) {
     printf("\n");
 }
 #endif
+
 double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
     int i;
     int currentIteration = 0;
@@ -372,6 +377,7 @@ void freeRelatedVectors(Centroid* centroid) {
 double euclidianDistance(double *vector1, double *vector2, int vectorsLength) {
     double sum = 0.0;
     int i;
+
     for (i = 0; i < vectorsLength; i++) {
         sum += pow(vector1[i] - vector2[i], 2);
     }
@@ -381,6 +387,7 @@ double euclidianDistance(double *vector1, double *vector2, int vectorsLength) {
 double* copyArray(double* inputArray, int rows) {
     int i;
     double* arrayCopy = (double*)malloc(rows * sizeof(double));
+
     if (arrayCopy == NULL) 
         return NULL;
     for (i = 0; i < rows; i++)
@@ -391,17 +398,7 @@ double* copyArray(double* inputArray, int rows) {
 
 void zeroArray(double* array, int arrayLength) {
     int i;
+
     for (i = 0; i < arrayLength; i++)
         array[i] = 0.0;
-}
-
-int countDigitsOfWholePart(double value) {
-    int count = 1;
-    if (value < 0)
-        value = -value;
-    while (value >= 10) {
-        value /= 10;
-        count++;
-    }
-    return count;
 }
