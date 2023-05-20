@@ -318,7 +318,7 @@ double update(Centroid* centroid, int vectorsLength) {
     int i;
     double delta;
     double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
-    printf("Inside update\nThe vec:\n");
+    printf("Inside update\nThe Centroid:\n");
     printVector(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
@@ -326,6 +326,7 @@ double update(Centroid* centroid, int vectorsLength) {
     delta = euclidianDistance(oldCentroidVector, centroid->selfVector, vectorsLength);
     freeRelatedVectors(centroid);
     free(oldCentroidVector);
+    printf("update ended");
     return delta;
 }
 
