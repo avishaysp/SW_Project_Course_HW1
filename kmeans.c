@@ -48,9 +48,7 @@ void freeRelatedVectors(Centroid*);
 double maxDelta(double*, int);
 double** getCentroidsSelfVectors(Centroid*, int);
 double** kMeans(int, int, int, int, double, double**);
-char* roundedDouble(double*);
-char*** roundedVectors(double**, int, int);
-char** roundedVector(double*, int);
+
 
 #ifdef DEBUG
 void printVector(double, int);
