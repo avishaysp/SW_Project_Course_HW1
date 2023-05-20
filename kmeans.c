@@ -307,6 +307,9 @@ double maxDelta(double *deltas, int numberOfVectors) {
 }
 
 double update(Centroid* centroid, int vectorsLength) {
+    if (centroid->numOfVectors == 0) {
+        return 0.0;
+    }
     int i;
     double delta;
     double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
@@ -362,12 +365,16 @@ void freeRelatedVectors(Centroid* centroid) {
     double distToClosest = euclidianDistance(vector, centroids[0].selfVector, vectorsLength);
     double currentDist;
     for (i = 1; i < K; i++) {
+        printf("The Closest Centroid:\n");
+        printVector(closestCentroid->selfVector, vectorsLength);
         currentDist = euclidianDistance(vector, centroids[i].selfVector, vectorsLength);
         if (currentDist < distToClosest) {
             closestCentroid = &centroids[i];
             distToClosest = currentDist;
         }
     }
+    printf("The Closest Centroid:\n");
+    printVector(closestCentroid->selfVector, vectorsLength);
     return closestCentroid;
 }
 
