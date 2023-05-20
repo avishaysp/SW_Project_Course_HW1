@@ -269,7 +269,7 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
     for (i = 0; i < K; i++) {
         centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
         centroids[i].numOfVectors = 0;
-        printf("Centroid num: %d\n", i);
+        printf("Centroid #%d:\n", i);
         printVector(centroids[i].selfVector, vectorsLength);
         centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
     }
