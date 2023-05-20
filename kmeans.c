@@ -121,7 +121,7 @@ int* verifyInput(int a, char **b, int numberOfVectors){
         exit(1);
     }
     k1 = b[1];
-    if(!isStrNumber(k1)){
+    if(!isStrNumber(k1)) {
         printf("invalid number of clusters!\n");
         thereIsAnError = 1;
     } else {
@@ -143,10 +143,10 @@ int* verifyInput(int a, char **b, int numberOfVectors){
                 thereIsAnError = 1;
             }
         }
-        if (thereIsAnError) {
-            exit(1);
-        }
     } else { iter = 200; }
+    if (thereIsAnError) {
+        exit(1);
+    }
     arr[0] = k;
     arr[1] = iter;
     return arr;
@@ -242,6 +242,7 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
     double **result;
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)calloc(numberOfVectors, sizeof(double));
+
     /*Create Centroids*/
     for (i = 0; i < K; i++) {
         centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
@@ -296,6 +297,7 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
 double maxDelta(double *deltas, int numberOfVectors) {
     int i;
     double maxVal = 0.0;
+
     for (i = 0; i < numberOfVectors; i++)
         maxVal = max(maxVal, deltas[i]);
     return maxVal;
@@ -305,6 +307,7 @@ double update(Centroid* centroid, int vectorsLength) {
     int i;
     double delta;
     double* oldCentroidVector;
+
     if (centroid->numOfVectors == 0) {
         return 0.0;
     }
@@ -321,6 +324,7 @@ double update(Centroid* centroid, int vectorsLength) {
 double** getCentroidsSelfVectors(Centroid* centroids, int K) {
     int i;
     double** selfVectors = (double**) malloc(K * sizeof(double*));
+
     for (i = 0; i < K; i ++) {
         selfVectors[i] = centroids[i].selfVector;
     }
@@ -330,6 +334,7 @@ double** getCentroidsSelfVectors(Centroid* centroids, int K) {
 double averageOf(Centroid* centroid, int i) {
     double sum = 0.0;
     int j;
+
     for (j = 0; j < centroid->numOfVectors; j++) {
         sum += centroid->relatedVectors[j][i];
     }
@@ -338,6 +343,7 @@ double averageOf(Centroid* centroid, int i) {
 
 void freeRelatedVectors(Centroid* centroid) {
     int i;
+
     for (i = 0; i < centroid->numOfVectors; i++) {
         free(centroid->relatedVectors[i]);
     }
@@ -351,6 +357,7 @@ void freeRelatedVectors(Centroid* centroid) {
     Centroid* closestCentroid = centroids;
     double distToClosest = euclidianDistance(vector, centroids[0].selfVector, vectorsLength);
     double currentDist;
+
     for (i = 1; i < K; i++) {
         currentDist = euclidianDistance(vector, centroids[i].selfVector, vectorsLength);
         if (currentDist < distToClosest) {
