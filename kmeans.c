@@ -265,6 +265,7 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
     /*Create Centroids*/
+    printf("Create Centroids\n");
     for (i = 0; i < K; i++) {
         centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
         centroids[i].numOfVectors = 0;
