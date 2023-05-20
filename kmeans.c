@@ -25,7 +25,7 @@ typedef struct Vector
     Cord *cords;
 }Vector;
 
-/*FIXME remove*/
+/*TODO: remove*/
 void tests(void);
 
 /*Input functions*/
