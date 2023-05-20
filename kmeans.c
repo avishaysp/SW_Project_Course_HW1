@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-#define max(a, b) ((a) > (b) ? (a) : (b))
 
 typedef struct Centroid
 {
@@ -113,29 +112,29 @@ int* verifyInput(int a, char **b){
     int k, iter;
     char* k1, *iter1;
     if (a < 2 || a > 3){
-        printf("An Error Has Occurred");
+        printf("An Error Has Occurred\n");
         exit(1);
     }
     k1 = b[1];
     if(!isStrNumber(k1)){
-        printf("invalid number of clusters!");
+        printf("invalid number of clusters!\n");
         exit(1);
     } else {
         k = atoi(k1);
         if(k <= 1 /*|| argv[1] >= mat.GetLength(0)*/){
-            printf("invalid number of clusters!");
+            printf("invalid number of clusters!\n");
             exit(1);
         }
     }
     if (a == 3){
         iter1 = b[2];
         if(!isStrNumber(iter1)){
-            printf("Invalid maximum iteration!");
+            printf("Invalid maximum iteration!\n");
             exit(1);
         } else {
             iter = atoi(iter1);
             if(iter <= 1 || iter >= 1000){
-                printf("Invalid maximum iteration!");
+                printf("Invalid maximum iteration!\n");
                 exit(1);
             }
         }
@@ -152,7 +151,10 @@ void printMat(double** mat, int vectorsLength, int numOfVectors){
     int j;
     for(i=0; i<numOfVectors; i++) {
         for(j=0; j<vectorsLength; j++) {
-            printf("%.4f,", mat[i][j]);
+            printf("%.4f", mat[i][j]);
+            if (j < vectorsLength - 1) {
+                printf(",");
+            }
         }
         printf("\n");
     }
@@ -192,12 +194,8 @@ Vector* getInput(int* numOfVectors, int* vectorsLength)
     curr_vec = head_vec;
     curr_vec->next = NULL;
 
-
-    while (scanf("%lf%c", &n, &c) == 2)
-    {
-
-        if (c == '\n')
-        {
+    while (scanf("%lf%c", &n, &c) == 2) {
+        if (c == '\n') {
             num++;
             curr_cord->value = n;
             curr_vec->cords = head_cord;
@@ -209,7 +207,6 @@ Vector* getInput(int* numOfVectors, int* vectorsLength)
             curr_cord->next = NULL;
             continue;
         }
-
         if (num == 0) {
             length++;
         }
@@ -218,10 +215,8 @@ Vector* getInput(int* numOfVectors, int* vectorsLength)
         curr_cord = curr_cord->next;
         curr_cord->next = NULL;
     }
-
     *numOfVectors = num;
     *vectorsLength = length;
-
     return head_vec;
 }
 
@@ -246,29 +241,30 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
         centroids[i].numOfVectors = 0;
         centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
     }
-    do
-    {
+    do {
         for (i = 0; i < numberOfVectors; i++) {
-            /*
-            printf("Inside for. Iteration #%d\nThe vectors:\n", i);
-            printMat(vectorsList, vectorsLength, numberOfVectors);
-            printf("The centroids:\n");
-            printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
-            printf("Before calcClosestCentroid.\n"); */
+            #ifdef DEBUG
+                printf("Inside for. Iteration #%d\nThe vectors:\n", i);
+                printMat(vectorsList, vectorsLength, numberOfVectors);
+                printf("The centroids:\n");
+                printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
+                printf("Before calcClosestCentroid.\n"); */
+            #endif
             closestCentroid = calcClosestCentroid(vectorsList[i], centroids, K, vectorsLength);
-            /*
-            printf("After calcClosestCentroid.\n");
-            printf("Centroid: ");
-            printVector(closestCentroid->selfVector, vectorsLength);
-            printf("Vector: ");
-            printVector(vectorsList[i], vectorsLength);
-            */
+            #ifdef DEBUG
+                printf("After calcClosestCentroid.\n");
+                printf("Centroid: ");
+                printVector(closestCentroid->selfVector, vectorsLength);
+                printf("Vector: ");
+                printVector(vectorsList[i], vectorsLength);
+            #endif
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
             closestCentroid->numOfVectors++;
-        } /*
-        printf("The Centroids before updating:\n");
-        printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
-        */
+        }
+        #ifdef DEBUG
+            printf("The Centroids before updating:\n");
+            printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
+        #endif
         for (i = 0; i < K; i++) {
             deltas[i] = update(&centroids[i], vectorsLength);
         }
