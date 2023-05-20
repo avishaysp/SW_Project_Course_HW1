@@ -24,6 +24,9 @@ typedef struct Vector
     Cord *cords;
 }Vector;
 
+/*
+FUNCTIONS DECLARATIONS:
+*/
 
 /*Input functions*/
 void deleteList(Vector*);
@@ -112,6 +115,7 @@ int* verifyInput(int a, char **b, int numberOfVectors){
     int* arr = calloc(2, sizeof(int));
     int k, iter;
     char* k1, *iter1;
+    int thereIsAnError = 0;
     if (a < 2 || a > 3){
         printf("An Error Has Occurred\n");
         exit(1);
@@ -119,29 +123,30 @@ int* verifyInput(int a, char **b, int numberOfVectors){
     k1 = b[1];
     if(!isStrNumber(k1)){
         printf("invalid number of clusters!\n");
-        exit(1);
+        thereIsAnError = 1;
     } else {
         k = atoi(k1);
         if(k <= 1 || k >= numberOfVectors) {
             printf("invalid number of clusters!\n");
-            exit(1);
+            thereIsAnError = 1;
         }
     }
     if (a == 3){
         iter1 = b[2];
         if(!isStrNumber(iter1)){
             printf("Invalid maximum iteration!\n");
-            exit(1);
+            thereIsAnError = 1;
         } else {
             iter = atoi(iter1);
             if(iter <= 1 || iter >= 1000){
                 printf("Invalid maximum iteration!\n");
-                exit(1);
+                thereIsAnError = 1;
             }
         }
-    } else {
-        iter = 200;
-    }
+        if (thereIsAnError) {
+            exit(1);
+        }
+    } else { iter = 200; }
     arr[0] = k;
     arr[1] = iter;
     return arr;
@@ -220,7 +225,7 @@ Vector* getInput(int* numOfVectors, int* vectorsLength)
     *vectorsLength = length;
     return head_vec;
 }
-
+#ifdef DEBUG
 void printVector(double *vec, int vectorsLength) {
     int i;
     for (i = 0;i < vectorsLength; i++) {
@@ -228,6 +233,7 @@ void printVector(double *vec, int vectorsLength) {
     }
     printf("\n");
 }
+#endif
 double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
     int i;
     int currentIteration = 0;
