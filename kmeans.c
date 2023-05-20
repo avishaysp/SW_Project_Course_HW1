@@ -24,8 +24,6 @@ typedef struct Vector
     Cord *cords;
 }Vector;
 
-/*TODO: remove*/
-void tests(void);
 
 /*Input functions*/
 void deleteList(Vector*);
@@ -154,31 +152,27 @@ void printMat(double** mat, int vectorsLength, int numOfVectors){
     int j;
     for(i=0; i<numOfVectors; i++) {
         for(j=0; j<vectorsLength; j++) {
-            printf("%f,", mat[i][j]);
+            printf("%.4f,", mat[i][j]);
         }
         printf("\n");
     }
 }
 
-/*int argc, char** argv*/
-int main()
+int main(int argc, char** argv)
 {
-    tests();/*
-    struct inputMat input;
-    int K, iter, vectorsLength, numOfVectors;
+    double** input;
+    int K, iter;
+    int numberOfVectors = 0, vectorsLength = 0;
     double** kMeansResult;
     int* inputConsts;
     
-    input = createMatrix();
+    input = createMatrix(&numberOfVectors, &vectorsLength);
     inputConsts = verifyInput(argc, argv);
     K = inputConsts[0];
     iter = inputConsts[1];
-    numOfVectors = input.numOfVectors;
-    vectorsLength = input.vectorsLength;
     free(inputConsts);
-    kMeansResult = kMeans(K, iter, numOfVectors, vectorsLength, 0.01, input.mat);
-    printf("%f", kMeansResult[0][0]);
-    */
+    kMeansResult = kMeans(K, iter, numberOfVectors, vectorsLength, 0.01, input);
+    printMat(kMeansResult, vectorsLength, K);
     return 0;
 }
 
@@ -291,9 +285,6 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
         currentIteration++;
     } while (currentIteration < maxIter && maxMiuK >= eps);
     result = getCentroidsSelfVectors(centroids, K);
-    for (i = 0; i < K; i++) {
-        freeRelatedVectors(&centroids[i]);
-    }
     free(centroids);
     return result;
 }
@@ -460,25 +451,4 @@ int countDigitsOfWholePart(double value) {
         count++;
     }
     return count;
-}
-
-void tests(void) {
-    double **vecs =(double**)malloc(4 * sizeof(double**));
-    double *vec1 = (double*)malloc(2 * sizeof(double));
-    double *vec2 = (double*)malloc(2 * sizeof(double));
-    double *vec3 = (double*)malloc(2 * sizeof(double));
-    double *vec4 = (double*)malloc(2 * sizeof(double));
-    vec1[0] = 1.0;
-    vec1[1] = 0.0;
-    vec2[0] = 0.0;
-    vec2[1] = 1.0;
-    vec3[0] = -1.0;
-    vec3[1] = 0.0;
-    vec4[0] = 0.0;
-    vec4[1] = -1.0;
-    vecs[0] = vec1;
-    vecs[1] = vec2;
-    vecs[2] = vec3;
-    vecs[3] = vec4;
-    kMeans(2, 10, 4, 2, 0.01, vecs);    
 }
