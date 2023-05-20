@@ -341,6 +341,7 @@ double averageOf(Centroid* centroid, int i) {
     for (j = 0; j < centroid->numOfVectors; j++) {
         sum += centroid->relatedVectors[j][i];
     }
+    printf("averageOf result: %f\n", sum / centroid->numOfVectors);
     return sum / centroid->numOfVectors;
 }
 
