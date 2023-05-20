@@ -307,12 +307,12 @@ double maxDelta(double *deltas, int numberOfVectors) {
 }
 
 double update(Centroid* centroid, int vectorsLength) {
-    if (centroid->numOfVectors == 0) {
-        return 0.0;
-    }
     int i;
     double delta;
     double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
+    if (centroid->numOfVectors == 0) {
+        return 0.0;
+    }
     printf("Inside update\nThe Centroid:\n");
     printVector(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
