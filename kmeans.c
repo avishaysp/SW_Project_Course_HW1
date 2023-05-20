@@ -55,7 +55,7 @@ void printVector(double, int);
 #endif
 
 /*
-FUNCTIONS IMLEMENTATION:
+FUNCTIONS IMPLEMENTATION:
 */
 
 double** createMatrix(int* numberOfVectors, int* vectorsLength){
