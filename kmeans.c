@@ -241,42 +241,43 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
     double* deltas = (double*)calloc(numberOfVectors, sizeof(double));
     /*Create Centroids*/
-    printf("Create Centroids\n");
     for (i = 0; i < K; i++) {
         centroids[i].selfVector = copyArray(vectorsList[i], vectorsLength);
         centroids[i].numOfVectors = 0;
-        printf("Centroid #%d:\n", i);
-        printVector(centroids[i].selfVector, vectorsLength);
         centroids[i].relatedVectors = (double**)malloc(numberOfVectors * sizeof(double*));
     }
     do
     {
         for (i = 0; i < numberOfVectors; i++) {
-        
+            /*
             printf("Inside for. Iteration #%d\nThe vectors:\n", i);
             printMat(vectorsList, vectorsLength, numberOfVectors);
             printf("The centroids:\n");
             printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
-            printf("Before calcClosestCentroid.\n");
+            printf("Before calcClosestCentroid.\n"); */
             closestCentroid = calcClosestCentroid(vectorsList[i], centroids, K, vectorsLength);
+            /*
             printf("After calcClosestCentroid.\n");
             printf("Centroid: ");
             printVector(closestCentroid->selfVector, vectorsLength);
             printf("Vector: ");
             printVector(vectorsList[i], vectorsLength);
-            
+            */
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
             closestCentroid->numOfVectors++;
-        }
+        } /*
         printf("The Centroids before updating:\n");
         printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
+        */
         for (i = 0; i < K; i++) {
             deltas[i] = update(&centroids[i], vectorsLength);
         }
+        /*
         printf("The deltas:\n");
         printVector(deltas, K);
         printf("The Centroids after updating:\n");
         printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
+        */
         maxMiuK = maxDelta(deltas, numberOfVectors);
         zeroArray(deltas, vectorsLength);
         for (i = 0; i < K; i++) {
@@ -305,16 +306,12 @@ double update(Centroid* centroid, int vectorsLength) {
         return 0.0;
     }
     oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
-    printf("Inside update\nThe Centroid:\n");
-    printVector(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
     }
     delta = euclidianDistance(oldCentroidVector, centroid->selfVector, vectorsLength);
     free(oldCentroidVector);
     centroid->numOfVectors = 0;
-    printf("update ended\nThe Centroid:\n");
-    printVector(centroid->selfVector, vectorsLength);
     return delta;
 }
 
@@ -330,14 +327,9 @@ double** getCentroidsSelfVectors(Centroid* centroids, int K) {
 double averageOf(Centroid* centroid, int i) {
     double sum = 0.0;
     int j;
-    printf("The Centroid:\n");
-    printVector(centroid->selfVector, 2);
-    printf("related vecs:\n");
-    printMat(centroid->relatedVectors, 2, centroid->numOfVectors);
     for (j = 0; j < centroid->numOfVectors; j++) {
         sum += centroid->relatedVectors[j][i];
     }
-    printf("averageOf result: %f\n", sum / centroid->numOfVectors);
     return sum / centroid->numOfVectors;
 }
 
@@ -357,16 +349,12 @@ void freeRelatedVectors(Centroid* centroid) {
     double distToClosest = euclidianDistance(vector, centroids[0].selfVector, vectorsLength);
     double currentDist;
     for (i = 1; i < K; i++) {
-        printf("The Closest Centroid:\n");
-        printVector(closestCentroid->selfVector, vectorsLength);
         currentDist = euclidianDistance(vector, centroids[i].selfVector, vectorsLength);
         if (currentDist < distToClosest) {
             closestCentroid = &centroids[i];
             distToClosest = currentDist;
         }
     }
-    printf("The Closest Centroid:\n");
-    printVector(closestCentroid->selfVector, vectorsLength);
     return closestCentroid;
 }
 
