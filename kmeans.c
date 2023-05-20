@@ -13,101 +13,84 @@ typedef struct Centroid
     double** relatedVectors;
 }Centroid;
 
-struct cord
+typedef struct Cord
 {
     double value;
-    struct cord *next;
-};
-struct vector
+    struct Cord *next;
+}Cord;
+
+typedef struct Vector
 {
-    struct vector *next;
-    struct cord *cords;
-};
+    struct Vector *next;
+    Cord *cords;
+}Vector;
 
-struct input_list
-{
-    struct vector *vectors;
-    int vectorLength;
-    int numOfVectors;
 
-};
-
-struct inputMat
-{
-    double** mat;
-    int numOfVectors;
-    int vectorsLength;
-};
-
-void tests(void);
-void deleteList(struct vector* vec);
+/*Input functions*/
+void deleteList(Vector*);
 int isStrNumber(char*);
-struct inputMat createMatrix(void);
+double** createMatrix(int*, int*);
 int* verifyInput(int, char**);
-void printMat(double** mat, int vectorsLength, int numOfVectors);
-struct input_list getInput(void);
-double** deepCopy2DArray(double** inputArray, int rows, int columns);
-double* copyArray(double* inputArray, int rows);
-double update(Centroid* centroid, int vectorsLength);
-Centroid* calcClosestCentroid(double* vector, Centroid* centroids, int K, int vectorsLength);
-double euclidianDistance(double *vector1, double *vector2, int vectorsLength);
-double* copyArray(double* inputArray, int rows);
-void zeroArray(double* array, int arrayLength);
-double averageOf(Centroid* centroid, int i);
-void freeRelatedVectors(Centroid* centroid);
-double maxDelta(double *deltas, int numberOfVectors);
-double** getCentroidsSelfVectors(Centroid* centroids, int K);
-int countDigitsOfWholePart(double value);
-double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList);
+void printMat(double**, int, int);
+Vector* getInput(int*, int*);
 
+/*Calculating functions*/
+double** deepCopy2DArray(double**, int, int);
+double* copyArray(double*, int);
+double update(Centroid*, int);
+Centroid* calcClosestCentroid(double*, Centroid*, int, int);
+double euclidianDistance(double*, double*, int);
+void zeroArray(double*, int);
+double averageOf(Centroid*, int);
+void freeRelatedVectors(Centroid*);
+double maxDelta(double*, int);
+double** getCentroidsSelfVectors(Centroid*, int);
+int countDigitsOfWholePart(double);
+double** kMeans(int, int, int, int, double, double**);
+char* roundedDouble(double*);
+char*** roundedVectors(double**, int, int);
+char** roundedVector(double*, int);
 
-struct inputMat createMatrix(void){
+double** createMatrix(int* numberOfVectors, int* vectorsLength){
     int i, j;
-    struct input_list input = getInput();
-    struct inputMat structinputMat;
+    Vector* input_vec = getInput(numberOfVectors, vectorsLength);
     double** mat;
-    struct vector head = input.vectors[0];
-    struct vector vec = head;
-    struct cord c;
-    int numOfVectors = input.numOfVectors;
-    int vectorsLength = input.vectorLength;
-    printf("%d\n", vectorsLength);
-    mat = (double**) malloc(numOfVectors * sizeof(double*));
-    for(i = 0; i < numOfVectors; i++){
-        mat[i] = (double*) malloc(vectorsLength * sizeof(double));
-        c = vec.cords[0];
-        for(j = 0; j < vectorsLength; j++){
-            mat[i][j] = c.value;
-            if (j < vectorsLength - 1) {
-                c = *c.next;
+    Cord* c;
+    Vector* head = input_vec;
+    Vector* curr_vec = head;
+    int num = *numberOfVectors;
+    int length = *vectorsLength;
+    mat = (double**) malloc(num * sizeof(double*));
+    for(i = 0; i < num; i++){
+        mat[i] = (double*) malloc(length * sizeof(double));
+        c = curr_vec -> cords;
+        for(j = 0; j < length; j++){
+            mat[i][j] = c -> value;
+            if (j < length - 1) {
+                c = c -> next;
             }
         }
-        vec = *(vec.next);
+        curr_vec = curr_vec -> next;
     }
-    deleteList(head.next);
-    structinputMat.mat = mat;
-    structinputMat.vectorsLength = vectorsLength;
-    structinputMat.numOfVectors = numOfVectors;
-    return structinputMat;
+    deleteList(head);
+    return mat;
 }
 
 
-
-void deleteCords(struct cord* head) {
+void deleteCords(Cord* head) {
     if (head != NULL) {
         deleteCords(head->next);
         free(head);
     }
 }
 
-void deleteList(struct vector* vec){
+void deleteList(Vector* vec){
     if (vec != NULL) {
         deleteList(vec->next);
-        deleteCords(&(vec->cords[0]));
+        deleteCords(vec->cords);
         free(vec);
     }
 }
-
 
 
 int isStrNumber(char* str){
@@ -123,7 +106,6 @@ int isStrNumber(char* str){
     }
 
     return 1;
-
 }
 
 int* verifyInput(int a, char **b){
@@ -198,21 +180,19 @@ int main()
     return 0;
 }
 
-struct input_list getInput(void)
+Vector* getInput(int* numOfVectors, int* vectorsLength)
 {
-    struct input_list input;
-    struct vector *head_vec, *curr_vec;
-    struct cord *head_cord, *curr_cord;
+    Vector *head_vec, *curr_vec;
+    Cord *head_cord, *curr_cord;
+    int num = 0, length = 1;
     double n;
     char c;
-    int numOfVectors = 0, vectorsLength = 1;
 
-
-    head_cord = malloc(sizeof(struct cord));
+    head_cord = (Cord*)malloc(sizeof(Cord));
     curr_cord = head_cord;
     curr_cord->next = NULL;
 
-    head_vec = malloc(sizeof(struct vector));
+    head_vec = (Vector*)malloc(sizeof(Vector));
     curr_vec = head_vec;
     curr_vec->next = NULL;
 
@@ -222,33 +202,33 @@ struct input_list getInput(void)
 
         if (c == '\n')
         {
-            numOfVectors++;
+            num++;
             curr_cord->value = n;
             curr_vec->cords = head_cord;
-            curr_vec->next = malloc(sizeof(struct vector));
+            curr_vec->next = (Vector*)malloc(sizeof(Vector));
             curr_vec = curr_vec->next;
             curr_vec->next = NULL;
-            head_cord = malloc(sizeof(struct cord));
+            head_cord = (Cord*)malloc(sizeof(Cord));
             curr_cord = head_cord;
             curr_cord->next = NULL;
             continue;
         }
 
-        if (numOfVectors == 0) {
-            vectorsLength++;
+        if (num == 0) {
+            length++;
         }
         curr_cord->value = n;
-        curr_cord->next = malloc(sizeof(struct cord));
+        curr_cord->next = (Cord*)malloc(sizeof(Cord));
         curr_cord = curr_cord->next;
         curr_cord->next = NULL;
     }
 
-    input.numOfVectors = numOfVectors;
-    input.vectorLength = vectorsLength;
-    input.vectors = head_vec;
+    *numOfVectors = num;
+    *vectorsLength = length;
 
-    return input;
+    return head_vec;
 }
+
 void printVector(double *vec, int vectorsLength) {
     int i;
     for (i = 0;i < vectorsLength; i++) {
