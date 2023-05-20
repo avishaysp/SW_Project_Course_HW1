@@ -54,6 +54,10 @@ double** kMeans(int, int, int, int, double, double**);
 void printVector(double, int);
 #endif
 
+/*
+FUNCTIONS IMLEMENTATION:
+*/
+
 double** createMatrix(int* numberOfVectors, int* vectorsLength){
     int i, j;
     Vector* input_vec = getInput(numberOfVectors, vectorsLength);
