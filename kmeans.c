@@ -356,18 +356,20 @@ void freeRelatedVectors(Centroid* centroid) {
     double distToClosest = euclidianDistance(vector, centroids[0].selfVector, vectorsLength);
     double currentDist;
     printf("calcClosestCentroid:\n");
-    printf("Centroid num: %d\n", i);
+    printf("Centroid num: %d\n", 0);
+    printf("currentDist: %d\n", distToClosest);
     printVector(centroids[i].selfVector, vectorsLength);
     for (i = 1; i < K; i++) {
         printf("The Vector:\n");
         printVector(vector, vectorsLength);
         currentDist = euclidianDistance(vector, centroids[i].selfVector, vectorsLength);
+        printf("currentDist: %0.4f\n", currentDist);
         if (currentDist < distToClosest) {
             closestCentroid = &centroids[i];
             distToClosest = currentDist;
         }
+        printf("distToClosest: %0.4f\n", distToClosest);
     }
-    printf("distToClosest: %0.4f\n", distToClosest);
     printf("Ended For in calcClosestCentroid\n");
     return closestCentroid;
 }
