@@ -358,7 +358,6 @@ void freeRelatedVectors(Centroid* centroid) {
     printf("calcClosestCentroid:\n");
     printf("Centroid num: %d\n", 0);
     printf("currentDist: %0.4f\n", distToClosest);
-    printVector(centroids[i].selfVector, vectorsLength);
     for (i = 1; i < K; i++) {
         printf("The Vector:\n");
         printVector(vector, vectorsLength);
