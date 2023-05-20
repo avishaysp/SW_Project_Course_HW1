@@ -338,6 +338,10 @@ double** getCentroidsSelfVectors(Centroid* centroids, int K) {
 double averageOf(Centroid* centroid, int i) {
     double sum = 0.0;
     int j;
+    printf("The Centroid:\n");
+    printVector(centroid->selfVector, 2);
+    printf("related vecs:\n");
+    printMat(centroid->relatedVectors, 2, centroid->numOfVectors);
     for (j = 0; j < centroid->numOfVectors; j++) {
         sum += centroid->relatedVectors[j][i];
     }
