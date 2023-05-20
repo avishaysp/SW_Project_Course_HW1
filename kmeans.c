@@ -326,7 +326,8 @@ double update(Centroid* centroid, int vectorsLength) {
     delta = euclidianDistance(oldCentroidVector, centroid->selfVector, vectorsLength);
     freeRelatedVectors(centroid);
     free(oldCentroidVector);
-    printf("update ended");
+    printf("update ended\nThe Centroid:\n");
+    printVector(centroid->selfVector, vectorsLength);
     return delta;
 }
 
