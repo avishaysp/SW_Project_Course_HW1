@@ -318,7 +318,7 @@ double update(Centroid* centroid, int vectorsLength) {
     int i;
     double delta;
     double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
-    printf("Inside update\n");
+    printf("Inside update\nThe vec:\n");
     printVector(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
