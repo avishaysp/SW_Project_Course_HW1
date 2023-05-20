@@ -29,7 +29,7 @@ typedef struct Vector
 void deleteList(Vector*);
 int isStrNumber(char*);
 double** createMatrix(int*, int*);
-int* verifyInput(int, char**);
+int* verifyInput(int, char**, int);
 void printMat(double**, int, int);
 Vector* getInput(int*, int*);
 
@@ -108,7 +108,7 @@ int isStrNumber(char* str){
     return 1;
 }
 
-int* verifyInput(int a, char **b){
+int* verifyInput(int a, char **b, int numberOfVectors){
     int* arr = calloc(2, sizeof(int));
     int k, iter;
     char* k1, *iter1;
@@ -122,7 +122,7 @@ int* verifyInput(int a, char **b){
         exit(1);
     } else {
         k = atoi(k1);
-        if(k <= 1 /*|| argv[1] >= mat.GetLength(0)*/){
+        if(k <= 1 || k >= numberOfVectors) {
             printf("invalid number of clusters!\n");
             exit(1);
         }
@@ -170,7 +170,7 @@ int main(int argc, char** argv)
     int* inputConsts;
     
     input = createMatrix(&numberOfVectors, &vectorsLength);
-    inputConsts = verifyInput(argc, argv);
+    inputConsts = verifyInput(argc, argv, numberOfVectors);
     K = inputConsts[0];
     iter = inputConsts[1];
     free(inputConsts);
@@ -269,12 +269,12 @@ double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, doub
         for (i = 0; i < K; i++) {
             deltas[i] = update(&centroids[i], vectorsLength);
         }
-        /*
-        printf("The deltas:\n");
-        printVector(deltas, K);
-        printf("The Centroids after updating:\n");
-        printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
-        */
+        #ifdef DEBUG
+            printf("The deltas:\n");
+            printVector(deltas, K);
+            printf("The Centroids after updating:\n");
+            printMat(getCentroidsSelfVectors(centroids, K), vectorsLength, K);
+        #endif
         maxMiuK = maxDelta(deltas, numberOfVectors);
         zeroArray(deltas, vectorsLength);
         for (i = 0; i < K; i++) {
@@ -355,30 +355,6 @@ void freeRelatedVectors(Centroid* centroid) {
     return closestCentroid;
 }
 
-char* roundedDouble(double* pDouble) {
-    int numOfDigsInWholePart = countDigitsOfWholePart(*pDouble);
-    char* rounded = (char*)malloc((1 + numOfDigsInWholePart + 1 + 4 + 1) * sizeof(char)); /* minus, radix, precision, null terminator */
-    sprintf(rounded, "%.4f", *pDouble);
-    return rounded;
-}
-
-char** roundedVector(double* vector, int vectorsLength) {
-    int i;
-    char** rounded = (char**)malloc(vectorsLength * sizeof(char*));
-    for (i = 0; i < vectorsLength; i++) {
-        rounded[i] = roundedDouble(&(vector[i]));
-    }
-    return rounded;
-}
-
-char*** roundedVectors(double** vectors, int vectorsLength, int numberOfVectors) {
-    int i;
-    char*** rounded = (char***) malloc(numberOfVectors * sizeof(char**));
-    for (i = 0; i < numberOfVectors; i++) {
-        rounded[i] = roundedVector(vectors[i], vectorsLength);
-    }
-    return rounded;
-}
 
 double euclidianDistance(double *vector1, double *vector2, int vectorsLength) {
     double sum = 0.0;
@@ -399,27 +375,6 @@ double* copyArray(double* inputArray, int rows) {
     return arrayCopy;
 }
 
-double** deepCopy2DArray(double** inputArray, int rows, int columns) {
-    int i, j;
-    /*Allocate memory*/
-    double** arrayCopy = (double**)malloc(rows * sizeof(double*));
-    if (arrayCopy == NULL)
-        return NULL;
-    for (i = 0; i < rows; i++) {
-        arrayCopy[i] = (double*)malloc(columns * sizeof(double));
-        if (arrayCopy[i] == NULL) {
-            /*Error Handling*/
-            for (j = 0; j < i; j++)
-                free(arrayCopy[j]);
-            free(arrayCopy);
-            return NULL;
-        }
-        /*The copying*/
-        for (j = 0; j < columns; j++)
-            arrayCopy[i][j] = inputArray[i][j];
-    }
-    return arrayCopy;
-}
 
 void zeroArray(double* array, int arrayLength) {
     int i;
