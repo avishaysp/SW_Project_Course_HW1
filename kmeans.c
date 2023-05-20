@@ -256,14 +256,14 @@ void printVector(double *vec, int vectorsLength) {
     }
     printf("\n");
 }
-double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
+double** kMeans(int K, int maxIter, int numberOfVectors, int vectorsLength, double eps, double** vectorsList) {
     int i;
     int currentIteration = 0;
     double maxMiuK;
     Centroid *closestCentroid;
     double **result;
     Centroid* centroids = (Centroid*)malloc(K * sizeof(Centroid));
-    double* deltas = (double*)malloc(numberOfVectors * sizeof(double));
+    double* deltas = (double*)calloc(numberOfVectors, sizeof(double));
     /*Create Centroids*/
     printf("Create Centroids\n");
     for (i = 0; i < K; i++) {
@@ -288,14 +288,13 @@ double** kMeans(int K, int iter, int numberOfVectors, int vectorsLength, double 
             closestCentroid->relatedVectors[closestCentroid->numOfVectors] = vectorsList[i];
             closestCentroid->numOfVectors++;
         }
-
-        zeroArray(deltas, vectorsLength);
         for (i = 0; i < K; i++) {
             deltas[i] = update(&centroids[i], vectorsLength);
         }
         maxMiuK = maxDelta(deltas, numberOfVectors);
+        zeroArray(deltas, vectorsLength);
         currentIteration++;
-    } while (currentIteration < iter && maxMiuK >= eps);
+    } while (currentIteration < maxIter && maxMiuK >= eps);
     result = getCentroidsSelfVectors(centroids, K);
     for (i = 0; i < K; i++) {
         freeRelatedVectors(&centroids[i]);
@@ -316,6 +315,8 @@ double update(Centroid* centroid, int vectorsLength) {
     int i;
     double delta;
     double* oldCentroidVector = copyArray(centroid->selfVector, vectorsLength);
+    printf("Inside update\n");
+    printVector(centroid->selfVector, vectorsLength);
     for (i = 0; i < vectorsLength; i++) {
         centroid->selfVector[i] = averageOf(centroid, i);
     }
