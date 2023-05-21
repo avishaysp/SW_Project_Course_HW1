@@ -115,7 +115,7 @@ int isStrNumber(char* str){
     return 1;
 }
 
-int* verifyInput(int a, char **b, int numberOfVectors, int vectorsLength, double **mat){
+int* verifyInput(int a, char **b, int numberOfVectors, double **mat){
     int* arr = calloc(2, sizeof(int));
     int k, iter, i;
     char* k1, *iter1;
