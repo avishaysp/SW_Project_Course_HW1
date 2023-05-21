@@ -178,6 +178,7 @@ int main(int argc, char** argv)
     int numberOfVectors = 0, vectorsLength = 0;
     double** kMeansResult;
     int* inputConsts;
+    int i;
     
     input = createMatrix(&numberOfVectors, &vectorsLength);
     inputConsts = verifyInput(argc, argv, numberOfVectors);
@@ -186,6 +187,11 @@ int main(int argc, char** argv)
     free(inputConsts);
     kMeansResult = kMeans(K, iter, numberOfVectors, vectorsLength, 0.01, input);
     printMat(kMeansResult, vectorsLength, K);
+    
+    for (i = 0; i < numberOfVectors; i++) {
+        free(input[i]);
+    }
+    free(input);
     return 0;
 }
 
