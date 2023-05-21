@@ -115,9 +115,9 @@ int isStrNumber(char* str){
     return 1;
 }
 
-int* verifyInput(int a, char **b, int numberOfVectors){
+int* verifyInput(int a, char **b, int numberOfVectors, int vectorsLength, double **mat){
     int* arr = calloc(2, sizeof(int));
-    int k, iter;
+    int k, iter, i;
     char* k1, *iter1;
     int thereIsAnError = 0;
     if (a < 2 || a > 3){
@@ -149,6 +149,9 @@ int* verifyInput(int a, char **b, int numberOfVectors){
         }
     } else { iter = 200; }
     if (thereIsAnError) {
+        for (i = 0; i < numberOfVectors; i++)
+            free(mat[i]);
+        free(mat);
         exit(1);
     }
     arr[0] = k;
@@ -181,7 +184,7 @@ int main(int argc, char** argv)
     int i;
     
     input = createMatrix(&numberOfVectors, &vectorsLength);
-    inputConsts = verifyInput(argc, argv, numberOfVectors);
+    inputConsts = verifyInput(argc, argv, numberOfVectors, vectorsLength, input);
     K = inputConsts[0];
     iter = inputConsts[1];
     free(inputConsts);
