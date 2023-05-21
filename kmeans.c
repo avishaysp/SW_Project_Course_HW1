@@ -32,7 +32,7 @@ FUNCTIONS DECLARATIONS:
 void deleteList(Vector*);
 int isStrNumber(char*);
 double** createMatrix(int*, int*);
-int* verifyInput(int, char**, int);
+int* verifyInput(int, char**, int, double*);
 void printMat(double**, int, int);
 Vector* getInput(int*, int*);
 
