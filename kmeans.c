@@ -184,7 +184,7 @@ int main(int argc, char** argv)
     int i;
     
     input = createMatrix(&numberOfVectors, &vectorsLength);
-    inputConsts = verifyInput(argc, argv, numberOfVectors, vectorsLength, input);
+    inputConsts = verifyInput(argc, argv, numberOfVectors, input);
     K = inputConsts[0];
     iter = inputConsts[1];
     free(inputConsts);
